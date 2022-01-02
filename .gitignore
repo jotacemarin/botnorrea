@@ -1,0 +1,10 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+# custom
+credentials/botnorrea-336821-02d3adb0ebbe.json
+config.json

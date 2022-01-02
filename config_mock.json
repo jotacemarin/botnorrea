@@ -1,0 +1,55 @@
+{
+  "service": {
+    "name": "botnorrea"
+  },
+  "provider": {
+    "name": "aws",
+    "runtime": "nodejs14.x",
+    "stage": "",
+    "region": "",
+    "environment": {
+      "TELEGRAM_TOKEN": "",
+      "MONGO_USER": "",
+      "MONGO_PASSWORD": "",
+      "MONGO_DATABASE": ""
+    }
+  },
+  "functions": [
+    {
+      "setWebhook": {
+        "name": "botnorrea-set-webhook",
+        "handler": "handler.setWebhook",
+        "memorySize": 128,
+        "timeout": 30,
+        "reservedConcurrency": 20,
+        "events": [
+          {
+            "http": {
+              "path": "/setWebhook",
+              "method": "POST",
+              "cors": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "webhook": {
+        "name": "botnorrea-webhook",
+        "handler": "handler.webhook",
+        "memorySize": 128,
+        "timeout": 30,
+        "reservedConcurrency": 20,
+        "events": [
+          {
+            "http": {
+              "path": "/webhook",
+              "method": "POST",
+              "cors": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

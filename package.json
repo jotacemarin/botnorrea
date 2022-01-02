@@ -1,0 +1,22 @@
+{
+  "name": "botnorrea",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "local:help": "sls invoke local -f webhook -p mocks/event_help.json --stage prod",
+    "local:randompic": "sls invoke local -f webhook -p mocks/event_randompic.json --stage prod",
+    "local:pic": "sls invoke local -f webhook -p mocks/event_pic.json --stage prod",
+    "local:settag": "sls invoke local -f webhook -p mocks/event_settag.json --stage prod",
+    "deploy": "sls deploy --stage prod --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "googleapis": "^92.0.0",
+    "http-status": "^1.5.0",
+    "mongoose": "^6.1.4",
+    "telegraf": "4.5.2"
+  }
+}

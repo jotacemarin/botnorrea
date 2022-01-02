@@ -1,0 +1,21 @@
+custom:
+  secrets: ${file(./config.json)}
+
+service: ${self:custom.secrets.service.name}
+
+frameworkVersion: '2'
+
+provider:
+  name: ${self:custom.secrets.provider.name}
+  runtime: ${self:custom.secrets.provider.runtime}
+  lambdaHashingVersion: 20201221
+  stage: ${opt:stage, 'dev'}
+  profile: botnorrea
+  region: ${self:custom.secrets.provider.region}
+  environment:
+    TELEGRAM_TOKEN: ${self:custom.secrets.provider.environment.TELEGRAM_TOKEN}
+    MONGO_USER: ${self:custom.secrets.provider.environment.MONGO_USER}
+    MONGO_PASSWORD: ${self:custom.secrets.provider.environment.MONGO_PASSWORD}
+    MONGO_DATABASE: ${self:custom.secrets.provider.environment.MONGO_DATABASE}
+
+functions: ${self:custom.secrets.functions}
