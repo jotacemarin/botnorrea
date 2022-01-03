@@ -4,10 +4,11 @@ const { connect, mediaModel } = require("../persistence/mongodb");
 
 module.exports = {
   name: "pic",
-  execute: async (context, tags) => {
+  execute: async (context, args) => {
     try {
       await connect();
 
+      const tags = args.map(arg => arg.toLowerCase());
       const filters = { tags: { $in: tags } };
 
       const total = await mediaModel.count(filters).exec();
@@ -28,5 +29,5 @@ module.exports = {
       return context.replyWithMarkdown("`" + message + "`");
     }
   },
-  description: `*BETA* retrieve a picture if you pass the google key as param`,
+  description: `*BETA* retrieve a picture if you pass tags`,
 };
