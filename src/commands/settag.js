@@ -17,6 +17,7 @@ module.exports = {
       const { tags: originalTags } = media;
       const filteredTags = tags
         .map((tag) => tag.toLowerCase())
+        .filter((tag) => tag.trim() !== "")
         .filter((tag) => !originalTags.includes(tag));
 
       if (!filteredTags.length) {
