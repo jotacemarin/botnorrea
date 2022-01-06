@@ -1,12 +1,16 @@
 "use strict";
 
-const { connect, mediaModel } = require("../persistence/mongodb");
+const { connect, mediaModel, saveUserModel } = require("../persistence/mongodb");
+const { haveCredentials } = require("../utils/telegraf");
 
 module.exports = {
   name: "randompic",
   execute: async (context) => {
     try {
+      haveCredentials(context);
+
       await connect();
+      await saveUserModel(context);
 
       const totalMedia = await mediaModel.count({ type: "image" }).exec();
       const randomSkip = Math.floor(Math.random() * totalMedia);

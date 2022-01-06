@@ -61,7 +61,7 @@ const buildHelp = (bot, commands = []) => {
     const helpText = commands
       .map(({ command, description }) => `/${command} - ${description}`)
       .join("\n");
-    bot.help((ctx) => ctx.replyWithMarkdown(helpText));
+    bot.help((context) => context.replyWithMarkdown(helpText));
   } catch (error) {
     console.error("buildHelp help: ", error);
   }

@@ -1,14 +1,22 @@
 "use strict";
 
-const { connect, mediaModel } = require("../persistence/mongodb");
+const {
+  connect,
+  mediaModel,
+  saveUserModel,
+} = require("../persistence/mongodb");
+const { haveCredentials } = require("../utils/telegraf");
 
 module.exports = {
   name: "pic",
   execute: async (context, args) => {
     try {
-      await connect();
+      haveCredentials(context);
 
-      const tags = args.map(arg => arg.toLowerCase());
+      await connect();
+      await saveUserModel(context);
+
+      const tags = args.map((arg) => arg.toLowerCase());
       const filters = { tags: { $in: tags } };
 
       const total = await mediaModel.count(filters).exec();
@@ -24,10 +32,10 @@ module.exports = {
 
       return context.reply(webContentLink);
     } catch (error) {
-      console.error("command ping", error);
+      console.error("command pic", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`");
     }
   },
-  description: `*BETA* retrieve a picture if you pass tags`,
+  description: "*BETA:* retrieve a picture if you pass tags",
 };

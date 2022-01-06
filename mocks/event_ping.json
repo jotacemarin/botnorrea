@@ -1,0 +1,3 @@
+{
+  "body": "{\"update_id\":970328333,\"message\":{\"message_id\":795,\"from\":{\"id\":1346557085,\"is_bot\":false,\"first_name\":\"Julio\",\"last_name\":\"Marin\",\"username\":\"jotacemarin\",\"language_code\":\"en\"},\"chat\":{\"id\":-759778969,\"title\":\"Test bonorrea\",\"type\":\"group\",\"all_members_are_administrators\":true},\"date\":1641434660,\"text\":\"\/ping@botnorrea_bot\",\"entities\":[{\"offset\":0,\"length\":19,\"type\":\"bot_command\"}]}}"
+}

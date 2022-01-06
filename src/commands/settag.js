@@ -1,12 +1,16 @@
 "use strict";
 
-const { connect, mediaModel } = require("../persistence/mongodb");
+const { connect, mediaModel, saveUserModel } = require("../persistence/mongodb");
+const { haveCredentials } = require("../utils/telegraf");
 
 module.exports = {
   name: "settag",
   execute: async (context, args) => {
     try {
+      haveCredentials(context);
+
       await connect();
+      await saveUserModel(context);
 
       const [webContentLink, ...tags] = args;
       const media = await mediaModel.findOne({ webContentLink }).exec();
@@ -39,5 +43,5 @@ module.exports = {
     }
   },
   description:
-    "*BETA* Set a new tags in media file to next finds using command `/pic` (usage: `/settag ulr_image tag tag ...tag`)",
+    "*BETA:* Set a new tags in media file to next finds using command `/pic` (usage: `/settag ulr_image tag tag ...tag`)",
 };
