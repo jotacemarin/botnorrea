@@ -8,9 +8,10 @@ const saveUserModel = async (context) => {
     const {
       message: { from },
     } = context;
-    const { username, first_name, last_name } = from;
+    const { id, username, first_name, last_name } = from;
 
     const user = {
+      id,
       firstname: first_name,
       lastname: last_name,
     };
