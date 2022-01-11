@@ -16,7 +16,7 @@ const saveUserModel = async (context) => {
       lastname: last_name,
     };
 
-    if (username) {
+    if (Boolean(username) && username !== "undefined") {
       user["username"] = username;
     }
 
