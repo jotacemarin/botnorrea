@@ -14,12 +14,8 @@ const saveUserModel = async (context) => {
       id,
       firstname: first_name,
       lastname: last_name,
+      username,
     };
-
-    if (Boolean(username) && username !== "undefined") {
-      user["username"] = username;
-    }
-
     await userModel.create(user);
   } catch (error) {
     const { message } = error;
