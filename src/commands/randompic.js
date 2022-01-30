@@ -13,9 +13,8 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
-      const webContentUrl = await getRandom();
-
-      return context.reply(webContentUrl);
+      const response = await getRandom();
+      return context.reply(response);
     } catch (error) {
       console.error("command randompic", error);
       const { message } = error;

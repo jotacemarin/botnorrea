@@ -1,6 +1,6 @@
 "use strict";
 
-const { connect, mediaModel, saveUserModel } = require("../persistence/mongodb");
+const { connect, saveUserModel } = require("../persistence/mongodb");
 const { haveCredentials } = require("../utils/telegraf");
 const { setTags } = require("../utils/filemanager");
 
@@ -14,8 +14,8 @@ module.exports = {
       await saveUserModel(context);
 
       const [webContentLink, ...tags] = args;
-      const tagsAdded = await setTags(webContentLink, tags);
-      return context.reply(`tags added: ${tagsAdded.join(", ")}`);
+      const response = await setTags(webContentLink, tags);
+      return context.reply(response);
     } catch (error) {
       console.error("command settag", error);
       const { message } = error;

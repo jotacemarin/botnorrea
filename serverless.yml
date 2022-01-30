@@ -18,5 +18,6 @@ provider:
     MONGO_PASSWORD: ${self:custom.secrets.provider.environment.MONGO_PASSWORD}
     MONGO_DATABASE: ${self:custom.secrets.provider.environment.MONGO_DATABASE}
     FILESMANAGER_API: ${self:custom.secrets.provider.environment.FILESMANAGER_API}
+    FILESMANAGER_API_KEY: ${self:custom.secrets.provider.environment.FILESMANAGER_API_KEY}
 
 functions: ${self:custom.secrets.functions}

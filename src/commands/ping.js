@@ -12,7 +12,7 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
-      context.replyWithMarkdown("*Pong!*");
+      return context.replyWithMarkdown("*Pong!*");
     } catch (error) {
       console.error("command ping", error);
       const { message } = error;

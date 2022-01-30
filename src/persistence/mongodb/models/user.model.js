@@ -19,8 +19,8 @@ const userSchema = new Schema(
 
 userSchema.pre("save", async function (next) {
   this.id = String(this.id);
-  if (Boolean(this.username) && this.username !== "undefined") {
-    this.username = String(this.username).toLowerCase();
+  if (this.username === void 0 || this.username === "undefined") {
+    this.username = null;
   }
   this.firstname = String(this.firstname).toLowerCase();
   this.lastname = String(this.lastname).toLowerCase();
