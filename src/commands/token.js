@@ -5,7 +5,7 @@ const { haveCredentials } = require("../utils/telegraf");
 const { createCode } = require("../utils/donneve");
 
 module.exports = {
-  name: "upload",
+  name: "token",
   execute: async (context) => {
     try {
       haveCredentials(context);
