@@ -1,11 +1,8 @@
 "use strict";
 
-const {
-  connect,
-  mediaModel,
-  saveUserModel,
-} = require("../persistence/mongodb");
+const { connect, saveUserModel } = require("../persistence/mongodb");
 const { haveCredentials } = require("../utils/telegraf");
+const { searchByTags } = require("../utils/filemanager");
 
 module.exports = {
   name: "pic",
@@ -17,20 +14,9 @@ module.exports = {
       await saveUserModel(context);
 
       const tags = args.map((arg) => arg.toLowerCase());
-      const filters = { tags: { $in: tags } };
+      const webContentUrl = await searchByTags(tags);
 
-      const total = await mediaModel.count(filters).exec();
-      if (!total) {
-        return context.reply("media file not found!");
-      }
-
-      const randomSkip = Math.floor(Math.random() * total);
-      const { webContentLink } = await mediaModel
-        .findOne(filters)
-        .skip(randomSkip)
-        .exec();
-
-      return context.reply(webContentLink);
+      return context.reply(webContentUrl);
     } catch (error) {
       console.error("command pic", error);
       const { message } = error;

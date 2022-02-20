@@ -13,7 +13,9 @@ module.exports = {
       await saveUserModel(context);
     } catch (error) {}
 
-    context.replyWithMarkdown("*Comandos es un calvo setenta hijueputa!*");
+    return context.replyWithMarkdown(
+      "*Comandos es un calvo setenta hijueputa!*"
+    );
   },
   description: "Comandos es un hijueputa!",
 };

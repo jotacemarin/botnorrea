@@ -1,7 +1,8 @@
 "use strict";
 
-const { connect, mediaModel, saveUserModel } = require("../persistence/mongodb");
+const { connect, saveUserModel } = require("../persistence/mongodb");
 const { haveCredentials } = require("../utils/telegraf");
+const { getRandom } = require("../utils/filemanager");
 
 module.exports = {
   name: "randompic",
@@ -12,14 +13,8 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
-      const totalMedia = await mediaModel.count({ type: "image" }).exec();
-      const randomSkip = Math.floor(Math.random() * totalMedia);
-      const { webContentLink } = await mediaModel
-        .findOne()
-        .skip(randomSkip)
-        .exec();
-
-      return context.reply(webContentLink);
+      const response = await getRandom();
+      return context.reply(response);
     } catch (error) {
       console.error("command randompic", error);
       const { message } = error;

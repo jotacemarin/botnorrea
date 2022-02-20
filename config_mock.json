@@ -11,7 +11,10 @@
       "TELEGRAM_TOKEN": "",
       "MONGO_USER": "",
       "MONGO_PASSWORD": "",
-      "MONGO_DATABASE": ""
+      "MONGO_DATABASE": "",
+      "FILESMANAGER_API": "",
+      "FILESMANAGER_API_KEY": "",
+      "DONNEVE_API": ""
     }
   },
   "functions": [
