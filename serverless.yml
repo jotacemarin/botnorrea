@@ -19,5 +19,6 @@ provider:
     MONGO_DATABASE: ${self:custom.secrets.provider.environment.MONGO_DATABASE}
     FILESMANAGER_API: ${self:custom.secrets.provider.environment.FILESMANAGER_API}
     FILESMANAGER_API_KEY: ${self:custom.secrets.provider.environment.FILESMANAGER_API_KEY}
+    DONNEVE_API: ${self:custom.secrets.provider.environment.DONNEVE_API}
 
 functions: ${self:custom.secrets.functions}
