@@ -30,7 +30,7 @@ const getRandom = async () => {
 };
 
 const searchByTags = async (tags = []) => {
-  const { data: files } = await filesManager.post("/Tags/search?limit=1", tags);
+  const { data: files } = await filesManager.post("/Tags/randomSearch", tags);
   if (files.length) {
     const [{ webContentUrl, tags: fileTags }] = files;
     const stringTags = buildTags(fileTags);
