@@ -29,8 +29,8 @@ const getRandom = async () => {
   return `${webContentUrl}${stringTags}`;
 };
 
-const searchByTags = async (tags = []) => {
-  const { data: files } = await filesManager.post("/Tags/randomSearch", tags);
+const searchByTags = async (tags = [], parseTags = true) => {
+  const { data: files } = await filesManager.post(`/Tags/randomSearch?parseTags=${parseTags}`, tags);
   if (files.length) {
     const [{ webContentUrl, tags: fileTags }] = files;
     const stringTags = buildTags(fileTags);

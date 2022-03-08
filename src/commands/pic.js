@@ -14,7 +14,7 @@ module.exports = {
       await saveUserModel(context);
 
       const tags = args.map((arg) => arg.toLowerCase());
-      const webContentUrl = await searchByTags(tags);
+      const webContentUrl = await searchByTags(tags, true);
 
       return context.reply(webContentUrl);
     } catch (error) {
