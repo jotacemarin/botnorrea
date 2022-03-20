@@ -34,7 +34,7 @@ const loadCommands = (bot) => {
     const { name, description } = commandScript;
 
     const command = `${BOT_PREFIX}${commandScript.name}`;
-    const execute = async (context, bot) => {
+    const execute = async (context) => {
       try {
         const { message } = context;
         const args = message.text

@@ -21,5 +21,6 @@ provider:
     FILESMANAGER_API_KEY: ${self:custom.secrets.provider.environment.FILESMANAGER_API_KEY}
     DONNEVE_API: ${self:custom.secrets.provider.environment.DONNEVE_API}
     DONNEVE_PAGE: ${self:custom.secrets.provider.environment.DONNEVE_PAGE}
+    MAIN_CHAT: ${self:custom.secrets.provider.environment.MAIN_CHAT}
 
 functions: ${self:custom.secrets.functions}

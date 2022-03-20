@@ -15,7 +15,8 @@
       "FILESMANAGER_API": "",
       "FILESMANAGER_API_KEY": "",
       "DONNEVE_API": "",
-      "DONNEVE_PAGE": ""
+      "DONNEVE_PAGE": "",
+      "MAIN_CHAT": ""
     }
   },
   "functions": [
