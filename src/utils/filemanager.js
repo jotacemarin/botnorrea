@@ -22,15 +22,19 @@ const buildTags = (tags = [], label = "tags") => {
 };
 
 const getRandom = async () => {
+  const categories = ["image", "video"]
+    .map((category) => `category=${category}`)
+    .join("&");
   const {
     data: { webContentUrl, tags },
-  } = await filesManager.get("/Files/random?category=image");
+  } = await filesManager.get(`/Files/random?${categories}`);
   const stringTags = buildTags(tags);
   return `${webContentUrl}${stringTags}`;
 };
 
 const searchByTags = async (tags = [], parseTags = true) => {
-  const { data: files } = await filesManager.post(`/Tags/randomSearch?parseTags=${parseTags}`, tags);
+  const url = `/Tags/randomSearch?parseTags=${parseTags}`;
+  const { data: files } = await filesManager.post(url, tags);
   if (files.length) {
     const [{ webContentUrl, tags: fileTags }] = files;
     const stringTags = buildTags(fileTags);

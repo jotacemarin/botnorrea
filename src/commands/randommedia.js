@@ -2,9 +2,10 @@
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
 const { haveCredentials } = require("../utils/telegraf");
+const { getRandom } = require("../utils/filemanager");
 
 module.exports = {
-  name: "ping",
+  name: "randommedia",
   execute: async ({ context }) => {
     try {
       haveCredentials(context);
@@ -12,12 +13,13 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
-      return context.replyWithMarkdown("*Pong!*");
+      const response = await getRandom();
+      return context.reply(response);
     } catch (error) {
-      console.error("command ping", error);
+      console.error("command randompic", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`");
     }
   },
-  description: `Only respond *Pong!*`,
+  description: "Retrieve a random picture from google drive",
 };

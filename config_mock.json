@@ -14,7 +14,8 @@
       "MONGO_DATABASE": "",
       "FILESMANAGER_API": "",
       "FILESMANAGER_API_KEY": "",
-      "DONNEVE_API": ""
+      "DONNEVE_API": "",
+      "DONNEVE_PAGE": ""
     }
   },
   "functions": [

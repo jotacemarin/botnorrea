@@ -7,6 +7,8 @@
     "local:help": "sls invoke local -f webhook -p mocks/event_help.json --stage prod",
     "local:randompic": "sls invoke local -f webhook -p mocks/event_randompic.json --stage prod",
     "local:pic": "sls invoke local -f webhook -p mocks/event_pic.json --stage prod",
+    "local:randommedia": "sls invoke local -f webhook -p mocks/event_randommedia.json --stage prod",
+    "local:media": "sls invoke local -f webhook -p mocks/event_media.json --stage prod",
     "local:ping": "sls invoke local -f webhook -p mocks/event_ping.json --stage prod",
     "local:ping_u": "sls invoke local -f webhook -p mocks/event_ping_unauthorized.json --stage prod",
     "local:settag": "sls invoke local -f webhook -p mocks/event_settag.json --stage prod",

@@ -34,7 +34,7 @@ const loadCommands = (bot) => {
     const { name, description } = commandScript;
 
     const command = `${BOT_PREFIX}${commandScript.name}`;
-    const execute = async (context) => {
+    const execute = async (context, bot) => {
       try {
         const { message } = context;
         const args = message.text
@@ -42,7 +42,8 @@ const loadCommands = (bot) => {
           .split(" ")
           .filter((_, index) => index > COMMAND_POSITION);
 
-        await commandScript.execute(context, args);
+        const params = { context, args, bot };
+        await commandScript.execute(params);
       } catch (error) {
         console.error(`${error.message}; ${command}`);
       }

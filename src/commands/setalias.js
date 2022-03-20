@@ -5,7 +5,7 @@ const { haveCredentials } = require("../utils/telegraf");
 
 module.exports = {
   name: "setalias",
-  execute: async (context, args) => {
+  execute: async ({ context, args }) => {
     try {
       haveCredentials(context);
 

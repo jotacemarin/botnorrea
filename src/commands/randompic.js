@@ -2,24 +2,25 @@
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
 const { haveCredentials } = require("../utils/telegraf");
-const { getRandom } = require("../utils/filemanager");
+const { deprecatedMessage } = require("../utils/deprecated");
+
+const deprecated = deprecatedMessage("randommedia");
 
 module.exports = {
   name: "randompic",
-  execute: async (context) => {
+  execute: async ({ context }) => {
     try {
       haveCredentials(context);
 
       await connect();
       await saveUserModel(context);
 
-      const response = await getRandom();
-      return context.reply(response);
+      return context.replyWithMarkdown(deprecated);
     } catch (error) {
       console.error("command randompic", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`");
     }
   },
-  description: "Retrieve a random picture from google drive",
+  description: `${deprecated} Retrieve a random picture from google drive`,
 };

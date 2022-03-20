@@ -6,7 +6,7 @@ const { setTags } = require("../utils/filemanager");
 
 module.exports = {
   name: "settag",
-  execute: async (context, args) => {
+  execute: async ({ context, args }) => {
     try {
       haveCredentials(context);
 
