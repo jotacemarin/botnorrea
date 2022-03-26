@@ -32,7 +32,7 @@ const webhook = async (event, context, callback) => {
 
   try {
     const { body: bodyString } = event;
-    
+
     const body = stringToJSON(bodyString);
     logger(body);
 

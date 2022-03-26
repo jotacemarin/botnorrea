@@ -7,7 +7,7 @@ const SCHEMA_NAME = "user";
 const userSchema = new Schema(
   {
     id: { type: String, required: true, unique: true },
-    username: { type: String, unique: true, index: "text"  },
+    username: { type: String, unique: true, index: "text" },
     firstname: { type: String, index: "text" },
     lastname: { type: String, index: "text" },
     aliases: { type: [String], default: [], index: "text" },
