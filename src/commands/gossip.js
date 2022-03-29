@@ -16,7 +16,11 @@ module.exports = {
 
       const chatId = Number(MAIN_CHAT);
       const message = String(context.message.text).replace("/gossip ", "");
-      return bot.telegram.sendMessage(chatId, message);
+      if (message === "") {
+        return bot.telegram.sendMessage(chatId, message);
+      }
+
+      return context.replyWithMarkdown("`Please write a message to send`");
     } catch (error) {
       console.error("command gossip", error);
       const { message } = error;

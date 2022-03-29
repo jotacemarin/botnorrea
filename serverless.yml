@@ -3,7 +3,7 @@ custom:
 
 service: ${self:custom.secrets.service.name}
 
-frameworkVersion: "2"
+frameworkVersion: "3"
 
 provider:
   name: ${self:custom.secrets.provider.name}
