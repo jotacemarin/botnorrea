@@ -15,7 +15,9 @@ module.exports = {
       await saveUserModel(context);
 
       const chatId = Number(MAIN_CHAT);
-      const message = String(context.message.text).replace("/gossip", "");
+      const message = String(context.message.text)
+        .replace("/gossip", "")
+        .replace("@botnorrea_bot", "");
       if (message !== "") {
         return bot.telegram.sendMessage(chatId, message);
       }
