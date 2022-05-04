@@ -1,9 +1,10 @@
 "use strict";
 
-const { TELEGRAM_TOKEN } = process.env;
+const { TELEGRAM_TOKEN, MAIN_CHAT } = process.env;
 
 const fs = require("fs");
 const { Telegraf } = require("telegraf");
+const { cleanMessage } = require("./utils/telegraf");
 
 const BOT_PREFIX = "/";
 const COMMAND_POSITION = 0;
@@ -75,8 +76,21 @@ const handleUpdate = async (body) => {
   await bot.handleUpdate(body);
 };
 
+const externalWebhook = async (body) => {
+  const bot = initBot();
+
+  const chatId = Number(MAIN_CHAT);
+  const message = cleanMessage(body.message);
+  if (message === "") {
+    throw new Error("Please write a message to send");
+  }
+
+  return bot.telegram.sendMessage(chatId, message);
+};
+
 module.exports = {
   setWebhook,
   handleUpdate,
   loadCommands,
+  externalWebhook,
 };

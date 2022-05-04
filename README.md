@@ -1,5 +1,8 @@
 # botnorrea
 
+## Nodejs version
+- 14.19.1
+
 ## dependencies
 
 - http-status
@@ -26,11 +29,13 @@
 
 - `POST` - https://59lbo0f12c.execute-api.us-east-2.amazonaws.com/prod/setWebhook
 - `POST` - https://59lbo0f12c.execute-api.us-east-2.amazonaws.com/prod/webhook
+- `POST` - https://59lbo0f12c.execute-api.us-east-2.amazonaws.com/prod/publicWebhook
 
 ## functions:
 
 - setWebhook: `botnorrea-set-webhook`
 - webhook: `botnorrea-webhook`
+- publicWebhook: `botnorrea-public-webhook`
 
 ## layers:
 

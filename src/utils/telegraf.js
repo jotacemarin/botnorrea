@@ -20,6 +20,16 @@ const haveCredentials = (context) => {
   );
 };
 
+const cleanMessage = (message) => {
+  const cleanedMessage = String(message)
+    .trim()
+    .replace("/gossip", "")
+    .replace("@botnorrea_bot", "");
+
+  return cleanedMessage;
+};
+
 module.exports = {
   haveCredentials,
+  cleanMessage,
 };

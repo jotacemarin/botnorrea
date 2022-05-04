@@ -13,6 +13,7 @@
     "local:ping_u": "sls invoke local -f webhook -p mocks/event_ping_unauthorized.json --stage prod",
     "local:settag": "sls invoke local -f webhook -p mocks/event_settag.json --stage prod",
     "local:upload": "sls invoke local -f webhook -p mocks/event_upload.json --stage prod",
+    "local:webhook": "sls invoke local -f publicWebhook -p mocks/public_webhook.json --stage prod",
     "deploy": "sls deploy --stage prod --verbose"
   },
   "keywords": [],
@@ -22,6 +23,7 @@
     "axios": "^0.24.0",
     "googleapis": "^92.0.0",
     "http-status": "^1.5.0",
+    "lodash": "^4.17.21",
     "mongoose": "^6.1.4",
     "telegraf": "4.5.2"
   }

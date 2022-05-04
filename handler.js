@@ -47,7 +47,28 @@ const webhook = async (event, context, callback) => {
   }
 };
 
+const publicWebhook = async (event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    const { body: bodyString } = event;
+
+    const body = stringToJSON(bodyString);
+    logger(body);
+
+    await telegram.externalWebhook(body);
+
+    return callback(null, createResponse());
+  } catch (error) {
+    const { message } = error;
+    console.error("webhook: ", message);
+    console.error("webhook: ", error);
+    return callback(null, createErrorResponse(message));
+  }
+};
+
 module.exports = {
   setWebhook,
   webhook,
+  publicWebhook,
 };

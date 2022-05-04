@@ -3,7 +3,7 @@
 const { MAIN_CHAT } = process.env;
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials } = require("../utils/telegraf");
+const { haveCredentials, cleanMessage } = require("../utils/telegraf");
 
 module.exports = {
   name: "gossip",
@@ -15,9 +15,7 @@ module.exports = {
       await saveUserModel(context);
 
       const chatId = Number(MAIN_CHAT);
-      const message = String(context.message.text)
-        .replace("/gossip", "")
-        .replace("@botnorrea_bot", "");
+      const message = cleanMessage(context.message.text);
       if (message !== "") {
         return bot.telegram.sendMessage(chatId, message);
       }
