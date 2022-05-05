@@ -22,5 +22,5 @@ module.exports = {
       return context.replyWithMarkdown("`" + message + "`");
     }
   },
-  description: "*BETA:* Retrieve a picture if you pass tags",
+  description: "Retrieve a picture if you pass tags",
 };

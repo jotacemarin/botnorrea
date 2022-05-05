@@ -23,5 +23,5 @@ module.exports = {
     }
   },
   description:
-    "*BETA:* Set a new tags in media file to next finds using command `/pic` (usage: `/settag ulr_image tag tag ...tag`)",
+    "Set a new tags in media file to next finds using command `/pic` (usage: `/settag ulr_image tag tag ...tag`)",
 };

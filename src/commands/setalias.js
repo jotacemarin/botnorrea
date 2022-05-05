@@ -42,5 +42,5 @@ module.exports = {
     }
   },
   description:
-    "*BETA:* Set a new aliases in user (usage: `/setalias id tag tag ...tag`)",
+    "Set a new aliases in user (usage: `/setalias id alias alias ...alias`)",
 };
