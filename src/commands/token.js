@@ -20,7 +20,7 @@ module.exports = {
       } = context;
 
       const code = await createCode(from);
-      const message = `Your code is: *${code}*\n\nUse in ${DONNEVE_PAGE}`;
+      const message = `Your code is: *${code}*\n\nUse in ${DONNEVE_PAGE}?token=${code}`;
       return context.replyWithMarkdown(message);
     } catch (error) {
       console.error("command token", error);
