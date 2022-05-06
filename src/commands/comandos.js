@@ -1,7 +1,7 @@
 "use strict";
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials } = require("../utils/telegraf");
+const { haveCredentials, getMessageId } = require("../utils/telegraf");
 
 module.exports = {
   name: "comandos",
@@ -12,9 +12,11 @@ module.exports = {
       await connect();
       await saveUserModel(context);
     } catch (error) {}
-
+    
+    const extra = getMessageId(context);
     return context.replyWithMarkdown(
-      "*Comandos es un calvo setenta hijueputa!*"
+      "*Comandos es un calvo setenta hijueputa!*",
+      extra
     );
   },
   description: "Comandos es un hijueputa!",

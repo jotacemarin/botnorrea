@@ -1,8 +1,7 @@
 "use strict";
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials } = require("../utils/telegraf");
-const { logger } = require("../utils/logger");
+const { haveCredentials, getMessageId } = require("../utils/telegraf");
 
 module.exports = {
   name: "debug",
@@ -14,8 +13,9 @@ module.exports = {
       await saveUserModel(context);
       const { update, botInfo } = context;
 
+      const extra = getMessageId(context);
       const message = "`" + JSON.stringify({ update, botInfo }, null, 2) + "`";
-      return context.replyWithMarkdown(message);
+      return context.replyWithMarkdown(message, extra);
     } catch (error) {
       console.error("command setgroup", error);
       const { message } = error;

@@ -1,12 +1,14 @@
 "use strict";
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials } = require("../utils/telegraf");
+const { haveCredentials, getMessageId } = require("../utils/telegraf");
 const { searchByTags } = require("../utils/filemanager");
 
 module.exports = {
   name: "media",
   execute: async ({ context, args }) => {
+    const extra = getMessageId(context);
+
     try {
       haveCredentials(context);
 
@@ -15,11 +17,11 @@ module.exports = {
 
       const tags = args.map((arg) => arg.toLowerCase());
       const webContentUrl = await searchByTags(tags, true);
-      return context.reply(webContentUrl);
+      return context.reply(webContentUrl, extra);
     } catch (error) {
       console.error("command pic", error);
       const { message } = error;
-      return context.replyWithMarkdown("`" + message + "`");
+      return context.replyWithMarkdown("`" + message + "`", extra);
     }
   },
   description: "Retrieve a picture if you pass tags",

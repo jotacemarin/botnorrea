@@ -29,7 +29,17 @@ const cleanMessage = (message) => {
   return cleanedMessage;
 };
 
+const getMessageId = (context) => {
+  try {
+    const { message: { message_id } } = context;
+    return { reply_to_message_id: message_id };
+  } catch (error) {
+    return {};
+  }
+};
+
 module.exports = {
   haveCredentials,
   cleanMessage,
+  getMessageId,
 };

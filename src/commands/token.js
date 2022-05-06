@@ -9,6 +9,8 @@ const { createCode } = require("../utils/donneve");
 module.exports = {
   name: "token",
   execute: async ({ context }) => {
+    const extra = getMessageId(context);
+
     try {
       haveCredentials(context);
 
@@ -21,11 +23,11 @@ module.exports = {
 
       const code = await createCode(from);
       const message = `Your code is: *${code}*\n\nUse in ${DONNEVE_PAGE}?token=${code}`;
-      return context.replyWithMarkdown(message);
+      return context.replyWithMarkdown(message, extra);
     } catch (error) {
       console.error("command token", error);
       const { message } = error;
-      return context.replyWithMarkdown("`" + message + "`");
+      return context.replyWithMarkdown("`" + message + "`", extra);
     }
   },
   description: `Retrieve a code to upload media in ${DONNEVE_PAGE}`,

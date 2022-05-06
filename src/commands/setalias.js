@@ -1,11 +1,13 @@
 "use strict";
 
 const { connect, userModel, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials } = require("../utils/telegraf");
+const { haveCredentials, getMessageId } = require("../utils/telegraf");
 
 module.exports = {
   name: "setalias",
   execute: async ({ context, args }) => {
+    const extra = getMessageId(context);
+
     try {
       haveCredentials(context);
 
@@ -15,7 +17,7 @@ module.exports = {
       const [_id, ...tags] = args;
       const user = await userModel.findOne({ _id }).exec();
       if (!user) {
-        return context.reply("user not found!");
+        return context.reply("user not found!", extra);
       }
 
       const { aliases: originalAliases, firstname, lastname } = user;
@@ -25,7 +27,7 @@ module.exports = {
         .filter((tag) => !originalAliases.includes(tag));
 
       if (!filteredAliases.length) {
-        return context.reply("no new aliases for user file!");
+        return context.reply("no new aliases for user file!", extra);
       }
 
       await userModel
@@ -34,11 +36,14 @@ module.exports = {
 
       const fullName = `${firstname} ${lastname}`;
       const aliasesAdded = filteredAliases.join(", ");
-      return context.reply(`alias added: ${aliasesAdded} for ${fullName}`);
+      return context.reply(
+        `alias added: ${aliasesAdded} for ${fullName}`,
+        extra
+      );
     } catch (error) {
       console.error("command setalias", error);
       const { message } = error;
-      return context.replyWithMarkdown("`" + message + "`");
+      return context.replyWithMarkdown("`" + message + "`", extra);
     }
   },
   description:
