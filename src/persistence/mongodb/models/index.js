@@ -1,30 +1,11 @@
 "use strict";
 
-const mediaModel = require("./media.model");
-const userModel = require("./user.model");
-
-const saveUserModel = async (context) => {
-  try {
-    const {
-      message: { from },
-    } = context;
-    const { id, username, first_name, last_name } = from;
-
-    const user = {
-      id,
-      firstname: first_name,
-      lastname: last_name,
-      username,
-    };
-    await userModel.create(user);
-  } catch (error) {
-    const { message } = error;
-    console.error("saveUserModel", message);
-  }
-};
+const media = require("./media.model");
+const user = require("./user.model");
+const crew = require("./crew.model");
 
 module.exports = {
-  mediaModel,
-  userModel,
-  saveUserModel,
+  ...media,
+  ...user,
+  ...crew,
 };

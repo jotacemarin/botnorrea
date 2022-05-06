@@ -1,6 +1,8 @@
 "use strict";
 
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
+const { ObjectId } = SchemaTypes;
+const { schemaName: schemaNameCrew } = require("./crew.model");
 
 const SCHEMA_NAME = "user";
 
@@ -11,6 +13,7 @@ const userSchema = new Schema(
     firstname: { type: String, index: "text" },
     lastname: { type: String, index: "text" },
     aliases: { type: [String], default: [], index: "text" },
+    crews: [{ type: ObjectId, unique: true, ref: schemaNameCrew }]
   },
   {
     timestamps: true,
@@ -29,4 +32,30 @@ userSchema.pre("save", async function (next) {
   return next();
 });
 
-module.exports = model(SCHEMA_NAME, userSchema);
+const userModel = model(SCHEMA_NAME, userSchema);
+
+const saveUserModel = async (context) => {
+  try {
+    const {
+      message: { from },
+    } = context;
+    const { id, username, first_name, last_name } = from;
+
+    const user = {
+      id,
+      firstname: first_name,
+      lastname: last_name,
+      username,
+    };
+    await userModel.create(user);
+  } catch (error) {
+    const { message } = error;
+    console.error("saveUserModel", message);
+  }
+};
+
+module.exports = {
+  schemaName: SCHEMA_NAME,
+  userModel,
+  saveUserModel,
+};

@@ -22,4 +22,8 @@ mediaSchema.pre("save", function (next) {
   next();
 });
 
-module.exports = model("media", mediaSchema);
+const mediaModel = model("media", mediaSchema);
+
+module.exports = {
+  mediaModel,
+};
