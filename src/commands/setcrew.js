@@ -19,28 +19,32 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
-      const [rawUsername, ...crewNames] = args;
-      const username = String(rawUsername).trim().replace("@", "");
-      const user = await userModel.findOne({ username }).exec();
-      if (!user) {
-        return context.reply("user not found!", extra);
+      const [rawCrewName, ...usernames] = args;
+      const crewName = String(rawCrewName).trim().toLowerCase();
+      const crew = await crewModel.findOne({ name: crewName }).exec();
+      if (!crew) {
+        return context.reply(`crew ${crewName} not found!`, extra);
       }
 
-      const $or = crewNames.map((name) => ({ name }));
-      const crews = await crewModel.find({ $or }).exec();
-      if (crews.length === 0) {
-        return context.reply("crews not found!", extra);
+      const $or = usernames.map((rawName) => {
+        const name = String(rawName).trim().replace("@", "");
+        return { name };
+      });
+      const users = await userModel.find({ $or }).exec();
+      if (users.length === 0) {
+        return context.reply("users not found!", extra);
       }
 
       await userModel
-        .updateOne(
-          { _id: user._id },
-          { $push: { crews: { $each: crews.map((crew) => crew._id) } } }
-        )
+        .updateMany({ $or }, { $push: { crews: crew._id } })
         .exec();
 
-      return context.reply(
-        `crews added: ${crewNames.join(", ")} for @${username}`,
+      const usernamesString = usernames
+        .map((username) => username)
+        .join(" | ");
+
+      return context.replyWithMarkdown(
+        `crew *${crewName}* updated: \n\n\[ ${usernamesString} \]`,
         extra
       );
     } catch (error) {
@@ -50,5 +54,5 @@ module.exports = {
     }
   },
   description:
-    "Set a new crews in user (usage: `/setcrew id crew_name crew_name ...crew_name`)",
+    "Set a new crews in user (usage: `/setcrew crew_name username username ...username`)",
 };

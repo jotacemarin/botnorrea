@@ -23,5 +23,5 @@ module.exports = {
     }
   },
   description:
-    "Create a new crew!",
+    "Create a new crew (usage: `/newcrew name`)",
 };
