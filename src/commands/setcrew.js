@@ -43,8 +43,8 @@ module.exports = {
         .map((username) => username)
         .join(" | ");
 
-      return context.replyWithMarkdown(
-        `crew *${crewName}* updated: \n\n\[ ${usernamesString} \]`,
+      return context.reply(
+        `crew ${crewName} updated: \n\n[ ${usernamesString} ]`,
         extra
       );
     } catch (error) {

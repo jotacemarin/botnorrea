@@ -39,5 +39,5 @@ module.exports = {
       return context.replyWithMarkdown("`" + message + "`", extra);
     }
   },
-  description: "Invoke a crews members",
+  description: "Invoke a crews members (usage: `/crew crew_name`)",
 };

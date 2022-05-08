@@ -23,5 +23,5 @@ module.exports = {
       return context.replyWithMarkdown("`" + message + "`", extra);
     }
   },
-  description: "Retrieve a random picture from google drive",
+  description: "Retrieve a random picture from file manager",
 };

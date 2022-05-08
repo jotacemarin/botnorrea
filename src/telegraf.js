@@ -80,12 +80,12 @@ const externalWebhook = async (body) => {
   const bot = initBot();
 
   const chatId = Number(MAIN_CHAT);
-  const message = cleanMessage(body.message);
-  if (message === "") {
+  const rawMessage = cleanMessage(body.message);
+  if (rawMessage === "") {
     throw new Error("Please write a message to send");
   }
 
-  return bot.telegram.sendMessage(chatId, message);
+  return bot.telegram.sendMessage(chatId, rawMessage);
 };
 
 module.exports = {

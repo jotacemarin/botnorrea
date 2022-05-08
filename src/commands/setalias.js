@@ -47,5 +47,5 @@ module.exports = {
     }
   },
   description:
-    "Set a new aliases in user (usage: `/setalias id alias alias ...alias`)",
+    "*ALPHA* Set a new aliases in user (usage: `/setalias id alias alias ...alias`)",
 };
