@@ -1,6 +1,6 @@
 # botnorrea
 
-## Nodejs version
+## nodejs version
 - 14.19.1
 
 ## dependencies

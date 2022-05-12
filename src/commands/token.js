@@ -3,7 +3,7 @@
 const { DONNEVE_PAGE } = process.env;
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials } = require("../utils/telegraf");
+const { haveCredentials, getMessageId } = require("../utils/telegraf");
 const { createCode } = require("../utils/donneve");
 
 module.exports = {
