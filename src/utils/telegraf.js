@@ -1,6 +1,9 @@
 "use strict";
 
+const { MAIN_CHAT, DEV_CHAT } = process.env;
+
 const TG_EMPTY_STRING = ".";
+const LIST_CHATS = [MAIN_CHAT, DEV_CHAT];
 
 const haveCredentials = (context) => {
   const {
@@ -38,8 +41,33 @@ const getMessageId = (context) => {
   }
 };
 
+const getChatId = (context) => {
+  const {
+    message: { chat: { id } },
+  } = context;
+  
+  if (!LIST_CHATS.includes(String(id))) {
+    throw new Error(`This group is not configured for @botnorrea_bot, please contact with Admin`); 
+  }
+
+  return id;
+};
+
+const getNewPermissions = (enabled = true) => ({
+  can_add_web_page_previews: enabled,
+  can_change_info: enabled,
+  can_invite_users: enabled,
+  can_pin_messages: enabled,
+  can_send_media_messages: enabled,
+  can_send_messages: enabled, 
+  can_send_other_messages: enabled,
+  can_send_polls: enabled
+});
+
 module.exports = {
   haveCredentials,
   cleanMessage,
   getMessageId,
+  getChatId,
+  getNewPermissions,
 };

@@ -13,7 +13,8 @@ const userSchema = new Schema(
     firstname: { type: String, index: "text" },
     lastname: { type: String, index: "text" },
     aliases: { type: [String], default: [], index: "text" },
-    crews: [{ type: ObjectId, unique: true, ref: schemaNameCrew }]
+    crews: [{ type: ObjectId, unique: true, ref: schemaNameCrew }],
+    admin: { type: Boolean, default: false },
   },
   {
     timestamps: true,
@@ -47,7 +48,7 @@ const saveUserModel = async (context) => {
       lastname: last_name,
       username,
     };
-    await userModel.create(user);
+    await userModel.updateOne({ id }, { $set: user }, { upsert: true });
   } catch (error) {
     const { message } = error;
     console.error("saveUserModel", message);

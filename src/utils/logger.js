@@ -1,9 +1,11 @@
 "use strict";
 
+const { DEV_CHAT } = process.env;
+
 const _ = require('lodash');
 
 const CHAT_ID_PATH = "message.chat.id";
-const TEST_BOTNORREA = -1001761165743;
+const TEST_BOTNORREA = Number(DEV_CHAT);
 const TEST_JOTACEMARIN = 1346557085;
 
 const TEST_CHATS = [TEST_BOTNORREA, TEST_JOTACEMARIN];

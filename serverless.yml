@@ -22,5 +22,6 @@ provider:
     DONNEVE_API: ${self:custom.secrets.provider.environment.DONNEVE_API}
     DONNEVE_PAGE: ${self:custom.secrets.provider.environment.DONNEVE_PAGE}
     MAIN_CHAT: ${self:custom.secrets.provider.environment.MAIN_CHAT}
+    DEV_CHAT: ${self:custom.secrets.provider.environment.DEV_CHAT}
 
 functions: ${self:custom.secrets.functions}
