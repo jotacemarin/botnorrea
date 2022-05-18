@@ -8,6 +8,8 @@ const {
 } = require("../persistence/mongodb");
 const { haveCredentials, getMessageId } = require("../utils/telegraf");
 
+const disabledCommand = true;
+
 module.exports = {
   name: "setcrew",
   execute: async ({ context, args }) => {
@@ -18,6 +20,10 @@ module.exports = {
 
       await connect();
       await saveUserModel(context);
+
+      if (disabledCommand) {
+        return context.reply(`This command disabled temporary!`, extra);
+      }
 
       const [rawCrewName, ...usernames] = args;
       const crewName = String(rawCrewName).trim().toLowerCase();
@@ -39,9 +45,7 @@ module.exports = {
         .updateMany({ $or }, { $push: { crews: crew._id } })
         .exec();
 
-      const usernamesString = usernames
-        .map((username) => username)
-        .join(" | ");
+      const usernamesString = usernames.map((username) => username).join(" | ");
 
       return context.reply(
         `crew ${crewName} updated: \n\n[ ${usernamesString} ]`,
