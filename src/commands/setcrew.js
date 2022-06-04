@@ -12,6 +12,7 @@ const disabledCommand = true;
 
 module.exports = {
   name: "setcrew",
+  disabled: disabledCommand,
   execute: async ({ context, args }) => {
     const extra = getMessageId(context);
 

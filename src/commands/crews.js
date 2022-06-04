@@ -7,8 +7,6 @@ const {
 } = require("../persistence/mongodb");
 const { haveCredentials, getMessageId } = require("../utils/telegraf");
 
-const disabledCommand = true;
-
 module.exports = {
   name: "crews",
   execute: async ({ context }) => {
@@ -19,10 +17,6 @@ module.exports = {
 
       await connect();
       await saveUserModel(context);
-
-      if (disabledCommand) {
-        return context.reply(`This command disabled temporary!`, extra);
-      }
 
       const crews = await crewModel.find({}).exec();
       if (crews.length === 0) {

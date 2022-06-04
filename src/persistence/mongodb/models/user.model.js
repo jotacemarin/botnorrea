@@ -1,8 +1,6 @@
 "use strict";
 
-const { Schema, model, SchemaTypes } = require("mongoose");
-const { ObjectId } = SchemaTypes;
-const { schemaName: schemaNameCrew } = require("./crew.model");
+const { Schema, model } = require("mongoose");
 
 const SCHEMA_NAME = "user";
 
@@ -12,9 +10,6 @@ const userSchema = new Schema(
     username: { type: String, unique: true, index: "text" },
     firstname: { type: String, index: "text" },
     lastname: { type: String, index: "text" },
-    aliases: { type: [String], default: [], index: "text" },
-    crews: [{ type: ObjectId, unique: true, ref: schemaNameCrew }],
-    admin: { type: Boolean, default: false },
   },
   {
     timestamps: true,

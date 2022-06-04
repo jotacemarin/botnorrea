@@ -32,7 +32,7 @@ const loadCommands = (bot) => {
 
   const commands = commandFiles.map((commandFile) => {
     const commandScript = require(`./commands/${commandFile}`);
-    const { name, description } = commandScript;
+    const { name, description, disabled } = commandScript;
 
     const command = `${BOT_PREFIX}${commandScript.name}`;
     const execute = async (context) => {
@@ -52,7 +52,7 @@ const loadCommands = (bot) => {
 
     bot.command(command, execute);
 
-    return { command: name, description };
+    return { command: name, description, disabled };
   });
 
   return commands;
@@ -61,6 +61,7 @@ const loadCommands = (bot) => {
 const buildHelp = (bot, commands = []) => {
   try {
     const helpText = commands
+      .filter(({ disabled }) => !disabled)
       .map(({ command, description }) => `/${command} - ${description}`)
       .join("\n");
     bot.help((context) => context.replyWithMarkdown(helpText));

@@ -1,12 +1,15 @@
 "use strict";
 
 const { Schema, model, SchemaTypes } = require("mongoose");
+const { ObjectId } = SchemaTypes;
+const { schemaName: schemaNameUser } = require("./user.model");
 
 const SCHEMA_NAME = "crew";
 
 const crewSchema = new Schema(
   {
     name: { type: String, unique: true, index: "text", required: true },
+    members: [{ type: ObjectId, ref: schemaNameUser }],
   },
   {
     timestamps: true,
@@ -15,6 +18,11 @@ const crewSchema = new Schema(
 
 crewSchema.pre("save", async function (next) {
   this.name = String(this.name).toLowerCase();
+  return next();
+});
+
+crewSchema.pre('findOne', function (next) {
+  this.populate("members");
   return next();
 });
 
