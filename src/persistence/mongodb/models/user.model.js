@@ -1,6 +1,7 @@
 "use strict";
 
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
+const { Number } = SchemaTypes;
 
 const SCHEMA_NAME = "user";
 
@@ -10,6 +11,7 @@ const userSchema = new Schema(
     username: { type: String, unique: true, index: "text" },
     firstname: { type: String, index: "text" },
     lastname: { type: String, index: "text" },
+    score: { type: Number, default: 0 },
   },
   {
     timestamps: true,
@@ -50,8 +52,23 @@ const saveUserModel = async (context) => {
   }
 };
 
+const saveUserScore = async (context, score = 0) => {
+  try {
+    const {
+      message: { from },
+    } = context;
+    const { id } = from;
+
+    await userModel.updateOne({ id }, { $inc: { score } });
+  } catch (error) {
+    const { message } = error;
+    console.error("saveUserScore", message);
+  }
+};
+
 module.exports = {
   schemaName: SCHEMA_NAME,
   userModel,
   saveUserModel,
+  saveUserScore,
 };

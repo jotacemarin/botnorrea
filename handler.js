@@ -7,6 +7,7 @@ const {
 } = require("./src/utils/parser");
 const { logger } = require("./src/utils/logger");
 const telegram = require("./src/telegraf");
+const onMessages = require("./src/messages");
 
 const setWebhook = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
@@ -37,6 +38,7 @@ const webhook = async (event, context, callback) => {
     logger(body);
 
     await telegram.handleUpdate(body);
+    await onMessages(body);
 
     return callback(null, createResponse());
   } catch (error) {
