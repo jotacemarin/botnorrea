@@ -60,6 +60,24 @@
           }
         ]
       }
+    },
+    {
+      "publicWebhook": {
+        "name": "botnorrea-public-webhook",
+        "handler": "handler.publicWebhook",
+        "memorySize": 128,
+        "timeout": 30,
+        "reservedConcurrency": 20,
+        "events": [
+          {
+            "http": {
+              "path": "/publicWebhook",
+              "method": "POST",
+              "cors": true
+            }
+          }
+        ]
+      }
     }
   ]
 }
