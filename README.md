@@ -7,6 +7,12 @@
 
 - http-status
 - telegraf
+- axios
+- googleapis (deprecation incomming)
+- lodash
+- moment
+- mongoose
+- redis
 
 ## commands
 
