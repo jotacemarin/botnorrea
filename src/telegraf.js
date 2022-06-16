@@ -4,9 +4,9 @@ const { TELEGRAM_TOKEN, MAIN_CHAT } = process.env;
 
 const fs = require("fs");
 const { Telegraf } = require("telegraf");
-const { cleanMessage } = require("./utils/telegraf");
+const { cleanMessage, setRedis } = require("./utils/telegraf");
 
-const BOT_PREFIX = "/";
+const BOT_COMMAND_PREFIX = "/";
 const COMMAND_POSITION = 0;
 
 const initBot = () => {
@@ -34,7 +34,7 @@ const loadCommands = (bot) => {
     const commandScript = require(`./commands/${commandFile}`);
     const { name, description, disabled } = commandScript;
 
-    const command = `${BOT_PREFIX}${commandScript.name}`;
+    const command = `${BOT_COMMAND_PREFIX}${commandScript.name}`;
     const execute = async (context) => {
       try {
         const { message } = context;
@@ -70,10 +70,15 @@ const buildHelp = (bot, commands = []) => {
   }
 };
 
+const buildRedis = async (commands = []) => {
+  commands.forEach(async ({ command }) => await setRedis(`${command}`));
+};
+
 const handleUpdate = async (body) => {
   const bot = initBot();
   const commands = loadCommands(bot);
   buildHelp(bot, commands);
+  buildRedis(commands);
   await bot.handleUpdate(body);
 };
 

@@ -1,11 +1,17 @@
 "use strict";
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials, getMessageId } = require("../utils/telegraf");
+const {
+  haveCredentials,
+  getMessageId,
+  isEnabled,
+} = require("../utils/telegraf");
 const { setTags } = require("../utils/filemanager");
 
+const CURRENT_COMMAND = "settag";
+
 module.exports = {
-  name: "settag",
+  name: CURRENT_COMMAND,
   execute: async ({ context, args }) => {
     const extra = getMessageId(context);
 
@@ -15,11 +21,12 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
+      await isEnabled(CURRENT_COMMAND);
+
       const [webContentLink, ...tags] = args;
       const response = await setTags(webContentLink, tags);
       return context.reply(response, extra);
     } catch (error) {
-      console.error("command settag", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`", extra);
     }

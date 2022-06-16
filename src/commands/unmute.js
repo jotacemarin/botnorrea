@@ -1,21 +1,18 @@
 "use strict";
 
-const { MAIN_CHAT } = process.env;
-
-const moment = require("moment");
-
-const timeInMinutes = 15;
-
 const { connect, saveUserModel, userModel } = require("../persistence/mongodb");
 const {
   haveCredentials,
   getMessageId,
   getChatId,
-  getNewPermissions
+  getNewPermissions,
+  isEnabled,
 } = require("../utils/telegraf");
 
+const CURRENT_COMMAND = "unmute";
+
 module.exports = {
-  name: "unmute",
+  name: CURRENT_COMMAND,
   execute: async ({ context, args, bot }) => {
     const extra = getMessageId(context);
 
@@ -25,11 +22,9 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
-      const chatId = getChatId(context);
+      await isEnabled(CURRENT_COMMAND);
 
-      if (chatId === Number(MAIN_CHAT)) {
-        return context.reply("Not available here!", extra);
-      }
+      const chatId = getChatId(context);
 
       const [rawUsername] = args;
       const username = String(rawUsername).trim().replace("@", "");
@@ -45,7 +40,6 @@ module.exports = {
       await bot.telegram.restrictChatMember(chatId, mongoUserId, extraRestrict);
       return context.reply(`${rawUsername} unmuted!`, extra);
     } catch (error) {
-      console.error("command unmute", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`", extra);
     }

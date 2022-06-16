@@ -3,16 +3,24 @@
 const { MAIN_CHAT } = process.env;
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials, cleanMessage } = require("../utils/telegraf");
+const {
+  haveCredentials,
+  cleanMessage,
+  isEnabled,
+} = require("../utils/telegraf");
+
+const CURRENT_COMMAND = "gossip";
 
 module.exports = {
-  name: "gossip",
+  name: CURRENT_COMMAND,
   execute: async ({ context, bot }) => {
     try {
       haveCredentials(context);
 
       await connect();
       await saveUserModel(context);
+
+      await isEnabled(CURRENT_COMMAND);
 
       const chatId = Number(MAIN_CHAT);
       const message = cleanMessage(context.message.text);
@@ -22,7 +30,6 @@ module.exports = {
 
       return context.replyWithMarkdown("`Please write a message to send`");
     } catch (error) {
-      console.error("command gossip", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`");
     }

@@ -1,11 +1,17 @@
 "use strict";
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials, getMessageId } = require("../utils/telegraf");
+const {
+  haveCredentials,
+  getMessageId,
+  isEnabled,
+} = require("../utils/telegraf");
 const { searchByTags } = require("../utils/filemanager");
 
+const CURRENT_COMMAND = "media";
+
 module.exports = {
-  name: "media",
+  name: CURRENT_COMMAND,
   execute: async ({ context, args }) => {
     const extra = getMessageId(context);
 
@@ -15,11 +21,12 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
+      await isEnabled(CURRENT_COMMAND);
+
       const tags = args.map((arg) => arg.toLowerCase());
       const webContentUrl = await searchByTags(tags, true);
       return context.reply(webContentUrl, extra);
     } catch (error) {
-      console.error("command pic", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`", extra);
     }

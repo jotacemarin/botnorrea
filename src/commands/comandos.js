@@ -1,23 +1,35 @@
 "use strict";
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials, getMessageId } = require("../utils/telegraf");
+const {
+  haveCredentials,
+  getMessageId,
+  isEnabled,
+} = require("../utils/telegraf");
+
+const CURRENT_COMMAND = "comandos";
 
 module.exports = {
-  name: "comandos",
+  name: CURRENT_COMMAND,
   execute: async ({ context }) => {
-    haveCredentials(context);
+    const extra = getMessageId(context);
 
     try {
+      haveCredentials(context);
+
       await connect();
       await saveUserModel(context);
-    } catch (error) {}
-    
-    const extra = getMessageId(context);
-    return context.replyWithMarkdown(
-      "*Comandos es un calvo setenta hijueputa!*",
-      extra
-    );
+
+      await isEnabled(CURRENT_COMMAND);
+
+      return context.replyWithMarkdown(
+        "*Comandos es un calvo setenta hijueputa!*",
+        extra
+      );
+    } catch (error) {
+      const { message } = error;
+      return context.replyWithMarkdown("`" + message + "`", extra);
+    }
   },
   description: "Comandos es un hijueputa!",
 };

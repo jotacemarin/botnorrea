@@ -13,6 +13,10 @@ provider:
   profile: botnorrea
   region: ${self:custom.secrets.provider.region}
   environment:
+    BOT_NAME: ${self:custom.secrets.provider.environment.BOT_NAME}
+    REDIS_HOST: ${self:custom.secrets.provider.environment.REDIS_HOST}
+    REDIS_PORT: ${self:custom.secrets.provider.environment.REDIS_PORT}
+    REDIS_PASSWORD: ${self:custom.secrets.provider.environment.REDIS_PASSWORD}
     TELEGRAM_TOKEN: ${self:custom.secrets.provider.environment.TELEGRAM_TOKEN}
     MONGO_USER: ${self:custom.secrets.provider.environment.MONGO_USER}
     MONGO_PASSWORD: ${self:custom.secrets.provider.environment.MONGO_PASSWORD}

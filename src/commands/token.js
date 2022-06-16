@@ -3,11 +3,17 @@
 const { DONNEVE_PAGE } = process.env;
 
 const { connect, saveUserModel } = require("../persistence/mongodb");
-const { haveCredentials, getMessageId } = require("../utils/telegraf");
+const {
+  haveCredentials,
+  getMessageId,
+  isEnabled,
+} = require("../utils/telegraf");
 const { createCode } = require("../utils/donneve");
 
+const CURRENT_COMMAND = "token";
+
 module.exports = {
-  name: "token",
+  name: CURRENT_COMMAND,
   execute: async ({ context }) => {
     const extra = getMessageId(context);
 
@@ -17,6 +23,8 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
+      await isEnabled(CURRENT_COMMAND);
+
       const {
         message: { from },
       } = context;
@@ -25,7 +33,6 @@ module.exports = {
       const message = `Your code is: *${code}*\n\nUse in ${DONNEVE_PAGE}?token=${code}`;
       return context.replyWithMarkdown(message, extra);
     } catch (error) {
-      console.error("command token", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`", extra);
     }

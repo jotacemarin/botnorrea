@@ -43,8 +43,6 @@ const webhook = async (event, context, callback) => {
     return callback(null, createResponse());
   } catch (error) {
     const { message } = error;
-    console.error("webhook: ", message);
-    console.error("webhook: ", error);
     return callback(null, createErrorResponse(message));
   }
 };
@@ -63,8 +61,6 @@ const publicWebhook = async (event, context, callback) => {
     return callback(null, createResponse());
   } catch (error) {
     const { message } = error;
-    console.error("publicWebhook: ", message);
-    console.error("publicWebhook: ", error);
     return callback(null, createErrorResponse(message));
   }
 };

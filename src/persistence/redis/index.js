@@ -17,7 +17,9 @@ const setKey = async (key, value, ttl = 300) => {
   const client = await getClient();
   await client.connect();
   await client.set(key, value);
-  await client.expire(key, ttl);
+  if (ttl !== 0) {
+    await client.expire(key, ttl);
+  }
   await client.quit();
 };
 

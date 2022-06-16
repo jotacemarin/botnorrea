@@ -1,13 +1,21 @@
 "use strict";
 
-const { connect, saveUserModel, saveCrewModel } = require("../persistence/mongodb");
-const { haveCredentials, getMessageId } = require("../utils/telegraf");
+const {
+  connect,
+  saveUserModel,
+  saveCrewModel,
+} = require("../persistence/mongodb");
+const {
+  haveCredentials,
+  getMessageId,
+  isEnabled,
+} = require("../utils/telegraf");
 
-const disabledCommand = true;
+const CURRENT_COMMAND = "newcrew";
 
 module.exports = {
-  name: "newcrew",
-  disabled: disabledCommand,
+  name: CURRENT_COMMAND,
+  disabled: true,
   execute: async ({ context, args }) => {
     const extra = getMessageId(context);
 
@@ -17,18 +25,14 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
-      if (disabledCommand) {
-        return context.reply(`This command disabled temporary!`, extra);
-      }
+      await isEnabled(CURRENT_COMMAND);
 
       const name = await saveCrewModel(args);
       return context.reply(`new crew created: ${name}`, extra);
     } catch (error) {
-      console.error("command newcrew", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`", extra);
     }
   },
-  description:
-    "Create a new crew (usage: `/newcrew crew_name`)",
+  description: "Create a new crew (usage: `/newcrew crew_name`)",
 };

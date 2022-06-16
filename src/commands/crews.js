@@ -1,14 +1,16 @@
 "use strict";
 
+const { connect, saveUserModel, crewModel } = require("../persistence/mongodb");
 const {
-  connect,
-  saveUserModel,
-  crewModel,
-} = require("../persistence/mongodb");
-const { haveCredentials, getMessageId } = require("../utils/telegraf");
+  haveCredentials,
+  getMessageId,
+  isEnabled,
+} = require("../utils/telegraf");
+
+const CURRENT_COMMAND = "crews";
 
 module.exports = {
-  name: "crews",
+  name: CURRENT_COMMAND,
   execute: async ({ context }) => {
     const extra = getMessageId(context);
 
@@ -18,6 +20,8 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
+      await isEnabled(CURRENT_COMMAND);
+
       const crews = await crewModel.find({}).exec();
       if (crews.length === 0) {
         return context.reply("crews not found!", extra);
@@ -26,7 +30,6 @@ module.exports = {
       const crewsNames = crews.map(({ name }) => `${name}`).join("\n");
       return context.replyWithMarkdown(`*crews*: \n\n${crewsNames}`, extra);
     } catch (error) {
-      console.error("command crews", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`", extra);
     }

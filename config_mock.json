@@ -8,6 +8,10 @@
     "stage": "",
     "region": "",
     "environment": {
+      "BOT_NAME": "",
+      "REDIS_HOST": "",
+      "REDIS_PORT": "",
+      "REDIS_PASSWORD": "",
       "TELEGRAM_TOKEN": "",
       "MONGO_USER": "",
       "MONGO_PASSWORD": "",

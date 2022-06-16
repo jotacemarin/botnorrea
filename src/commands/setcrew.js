@@ -6,13 +6,17 @@ const {
   userModel,
   crewModel,
 } = require("../persistence/mongodb");
-const { haveCredentials, getMessageId } = require("../utils/telegraf");
+const {
+  haveCredentials,
+  getMessageId,
+  isEnabled,
+} = require("../utils/telegraf");
 
-const disabledCommand = true;
+const CURRENT_COMMAND = "setcrew";
 
 module.exports = {
-  name: "setcrew",
-  disabled: disabledCommand,
+  name: CURRENT_COMMAND,
+  disabled: true,
   execute: async ({ context, args }) => {
     const extra = getMessageId(context);
 
@@ -22,9 +26,7 @@ module.exports = {
       await connect();
       await saveUserModel(context);
 
-      if (disabledCommand) {
-        return context.reply(`This command disabled temporary!`, extra);
-      }
+      await isEnabled(CURRENT_COMMAND);
 
       const [rawCrewName, ...usernames] = args;
       const crewName = String(rawCrewName).trim().toLowerCase();
@@ -53,7 +55,6 @@ module.exports = {
         extra
       );
     } catch (error) {
-      console.error("command setcrew", error);
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`", extra);
     }
