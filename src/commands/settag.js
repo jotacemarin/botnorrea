@@ -7,6 +7,7 @@ const {
   isEnabled,
 } = require("../utils/telegraf");
 const { setTags } = require("../utils/filemanager");
+const { trackCommand } = require("../utils/mixpanel");
 
 const CURRENT_COMMAND = "settag";
 
@@ -22,6 +23,7 @@ module.exports = {
       await saveUserModel(context);
 
       await isEnabled(CURRENT_COMMAND);
+      trackCommand(CURRENT_COMMAND, context);
 
       const [webContentLink, ...tags] = args;
       const response = await setTags(webContentLink, tags);

@@ -77,7 +77,6 @@ const getNewPermissions = (enabled = true) => ({
 const setRedis = async (command) => {
   const botCommand = `${BOT_REDIS_PREFIX}:${command}`;
   const current = await getKey(botCommand);
-  console.log("setRedis", current);
   if (!current) {
     await setKey(botCommand, COMMAND_ENABLED, 0);
   }

@@ -11,6 +11,7 @@ const {
   getNewPermissions,
   isEnabled,
 } = require("../utils/telegraf");
+const { trackCommand } = require("../utils/mixpanel");
 
 const CURRENT_COMMAND = "mute";
 const timeInMinutes = 15;
@@ -29,6 +30,7 @@ module.exports = {
       const chatId = getChatId(context);
 
       await isEnabled(CURRENT_COMMAND);
+      trackCommand(CURRENT_COMMAND, context);
 
       const [rawUsername] = args;
       const username = String(rawUsername).trim().replace("@", "");

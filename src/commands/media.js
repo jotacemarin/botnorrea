@@ -7,6 +7,7 @@ const {
   isEnabled,
 } = require("../utils/telegraf");
 const { searchByTags } = require("../utils/filemanager");
+const { trackCommand } = require("../utils/mixpanel");
 
 const CURRENT_COMMAND = "media";
 
@@ -22,6 +23,7 @@ module.exports = {
       await saveUserModel(context);
 
       await isEnabled(CURRENT_COMMAND);
+      trackCommand(CURRENT_COMMAND, context);
 
       const tags = args.map((arg) => arg.toLowerCase());
       const webContentUrl = await searchByTags(tags, true);

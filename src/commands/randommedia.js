@@ -7,6 +7,7 @@ const {
   isEnabled,
 } = require("../utils/telegraf");
 const { getRandom } = require("../utils/filemanager");
+const { trackCommand } = require("../utils/mixpanel");
 
 const CURRENT_COMMAND = "randommedia";
 
@@ -22,6 +23,7 @@ module.exports = {
       await saveUserModel(context);
 
       await isEnabled(CURRENT_COMMAND);
+      trackCommand(CURRENT_COMMAND, context);
 
       const response = await getRandom();
       return context.reply(response, extra);

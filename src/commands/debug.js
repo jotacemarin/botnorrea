@@ -6,6 +6,7 @@ const {
   getMessageId,
   isEnabled,
 } = require("../utils/telegraf");
+const { trackCommand } = require("../utils/mixpanel");
 
 const CURRENT_COMMAND = "debug";
 
@@ -19,6 +20,7 @@ module.exports = {
       await saveUserModel(context);
 
       await isEnabled(CURRENT_COMMAND);
+      trackCommand(CURRENT_COMMAND, context);
 
       const { update, botInfo } = context;
 

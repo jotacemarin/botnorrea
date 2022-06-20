@@ -9,6 +9,7 @@ const {
   isEnabled,
 } = require("../utils/telegraf");
 const { createCode } = require("../utils/donneve");
+const { trackCommand } = require("../utils/mixpanel");
 
 const CURRENT_COMMAND = "token";
 
@@ -24,6 +25,7 @@ module.exports = {
       await saveUserModel(context);
 
       await isEnabled(CURRENT_COMMAND);
+      trackCommand(CURRENT_COMMAND, context);
 
       const {
         message: { from },

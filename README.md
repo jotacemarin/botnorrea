@@ -13,6 +13,7 @@
 - moment
 - mongoose
 - redis
+- mixpanel
 
 ## commands
 

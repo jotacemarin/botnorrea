@@ -5,9 +5,9 @@ const {
   createResponse,
   createErrorResponse,
 } = require("./src/utils/parser");
-const { logger } = require("./src/utils/logger");
 const telegram = require("./src/telegraf");
-const onMessages = require("./src/messages");
+const { logger } = require("./src/utils/logger");
+const { trackMessage } = require("./src/utils/mixpanel");
 
 const setWebhook = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
@@ -38,7 +38,7 @@ const webhook = async (event, context, callback) => {
     logger(body);
 
     await telegram.handleUpdate(body);
-    await onMessages(body);
+    trackMessage(body);
 
     return callback(null, createResponse());
   } catch (error) {

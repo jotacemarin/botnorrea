@@ -11,6 +11,7 @@ const {
   getMessageId,
   isEnabled,
 } = require("../utils/telegraf");
+const { trackCommand } = require("../utils/mixpanel");
 
 const CURRENT_COMMAND = "setcrew";
 
@@ -27,6 +28,7 @@ module.exports = {
       await saveUserModel(context);
 
       await isEnabled(CURRENT_COMMAND);
+      trackCommand(CURRENT_COMMAND, context);
 
       const [rawCrewName, ...usernames] = args;
       const crewName = String(rawCrewName).trim().toLowerCase();

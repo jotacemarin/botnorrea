@@ -6,6 +6,7 @@ const {
   getMessageId,
   isEnabled,
 } = require("../utils/telegraf");
+const { trackCommand } = require("../utils/mixpanel");
 
 const CURRENT_COMMAND = "comandos";
 
@@ -21,6 +22,7 @@ module.exports = {
       await saveUserModel(context);
 
       await isEnabled(CURRENT_COMMAND);
+      trackCommand(CURRENT_COMMAND, context);
 
       return context.replyWithMarkdown(
         "*Comandos es un calvo setenta hijueputa!*",
