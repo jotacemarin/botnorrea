@@ -42,7 +42,7 @@ const trackMessage = ({ message }) => {
     const { from, text } = message;
     const { id } = from;
     const userId = String(id);
-    const amountWords = String(text).split(" ").length ?? 0;
+    const amountWords = String(text).split(" ").length;
 
     trackUser(from);
 
@@ -57,9 +57,7 @@ const trackCommand = (event, context) => {
     const { from } = message;
     trackUser(from);
     trackEvent(event, message);
-  } catch (error) {
-    console.log(error.message);
-  }
+  } catch (error) {}
 };
 
 module.exports = {

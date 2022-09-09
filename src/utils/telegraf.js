@@ -5,7 +5,6 @@ const { BOT_NAME, MAIN_CHAT, DEV_CHAT } = process.env;
 const { getKey, setKey } = require("../persistence/redis");
 
 const BOT_REDIS_PREFIX = `${BOT_NAME}`;
-const TG_EMPTY_STRING = ".";
 const LIST_CHATS = [MAIN_CHAT, DEV_CHAT];
 const COMMAND_ENABLED = "1";
 
@@ -18,9 +17,9 @@ const haveCredentials = (context) => {
 
   if (username) return null;
 
-  if (first_name !== TG_EMPTY_STRING) return null;
+  if (first_name) return null;
 
-  if (last_name !== TG_EMPTY_STRING) return null;
+  if (last_name) return null;
 
   throw new Error(
     "`Please set a *first name*, *last name* or *username* in your telegram account to use botnorrea!`"

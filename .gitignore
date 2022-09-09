@@ -5,6 +5,9 @@ jspm_packages
 # Serverless directories
 .serverless
 
+# test
+coverage
+
 # custom
 credentials/botnorrea-336821-02d3adb0ebbe.json
 config.json

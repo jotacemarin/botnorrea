@@ -54,6 +54,7 @@ const setTags = async (webContentUrl = "", tags = []) => {
 };
 
 module.exports = {
+  buildTags,
   getRandom,
   searchByTags,
   setTags,
