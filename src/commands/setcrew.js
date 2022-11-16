@@ -38,19 +38,24 @@ module.exports = {
       }
 
       const $or = usernames.map((rawName) => {
-        const name = String(rawName).trim().replace("@", "");
-        return { name };
+        const username = String(rawName).trim().replace("@", "");
+        return { username };
       });
       const users = await userModel.find({ $or }).exec();
       if (users.length === 0) {
         return context.reply("users not found!", extra);
       }
 
-      await userModel
-        .updateMany({ $or }, { $push: { crews: crew._id } })
+      await crewModel
+        .updateOne(
+          { _id: crew._id },
+          { $push: { members: users.map((user) => user._id) } }
+        )
         .exec();
 
-      const usernamesString = usernames.map((username) => username).join(" | ");
+      const usernamesString = users
+        .map(({ username }) => `@${username}`)
+        .join(" | ");
 
       return context.reply(
         `crew ${crewName} updated: \n\n[ ${usernamesString} ]`,

@@ -13,6 +13,7 @@
     "local:media": "sls invoke local -f webhook -p mocks/event_media.json --stage prod",
     "local:crews": "sls invoke local -f webhook -p mocks/event_crews.json --stage prod",
     "local:crew": "sls invoke local -f webhook -p mocks/event_crew.json --stage prod",
+    "local:setcrew": "sls invoke local -f webhook -p mocks/event_setcrew.json --stage prod",
     "local:settag": "sls invoke local -f webhook -p mocks/event_settag.json --stage prod",
     "local:upload": "sls invoke local -f webhook -p mocks/event_upload.json --stage prod",
     "local:webhook": "sls invoke local -f publicWebhook -p mocks/public_webhook.json --stage prod",
