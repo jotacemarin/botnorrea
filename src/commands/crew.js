@@ -24,7 +24,7 @@ module.exports = {
       await isEnabled(CURRENT_COMMAND);
       trackCommand(CURRENT_COMMAND, context);
 
-      const [crewName] = args;
+      const [crewName, ...rawMessage] = args;
       const crew = await crewModel.findOne({ name: crewName }).exec();
       if (!crew) {
         return context.reply("crew not found!", extra);
@@ -37,7 +37,13 @@ module.exports = {
       const usernames = members
         .map(({ username }) => `@${username}`)
         .join(" | ");
-      return context.reply(`${crewName}: \n\n[ ${usernames} ]`, extra);
+
+      const message = rawMessage.join(" ");
+
+      return context.replyWithHTML(
+        `${crewName}:\n\n<b>${message}</b>\n\n[ ${usernames} ]`,
+        extra
+      );
     } catch (error) {
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`", extra);

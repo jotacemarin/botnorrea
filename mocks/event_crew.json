@@ -1,0 +1,3 @@
+{
+  "body": "{\"update_id\":970413137,\"message\":{\"message_id\":316455,\"from\":{\"id\":1346557085,\"is_bot\":false,\"first_name\":\"Julio\",\"last_name\":\"Marin\",\"username\":\"jotacemarin\",\"language_code\":\"en\"},\"chat\":{\"id\":-1001266056726,\"title\":\"Cacorros Motorizados del Valle\",\"type\":\"supergroup\"},\"date\":1668620289,\"text\":\"/crew cali este es el debugging mas sapo perro, lo siento por spamearlos con esta joda!\",\"entities\":[{\"offset\":0,\"length\":5,\"type\":\"bot_command\"}]}}"
+}
