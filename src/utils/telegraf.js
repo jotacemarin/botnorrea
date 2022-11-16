@@ -1,11 +1,11 @@
 "use strict";
 
-const { BOT_NAME, MAIN_CHAT, DEV_CHAT } = process.env;
+const { BOT_NAME, MAIN_CHAT } = process.env;
 
 const { getKey, setKey } = require("../persistence/redis");
 
 const BOT_REDIS_PREFIX = `${BOT_NAME}`;
-const LIST_CHATS = [MAIN_CHAT, DEV_CHAT];
+const LIST_CHATS = [MAIN_CHAT];
 const COMMAND_ENABLED = "1";
 
 const haveCredentials = (context) => {

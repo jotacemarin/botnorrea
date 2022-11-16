@@ -1,15 +1,21 @@
-const { stringToJSON, createResponse, createErrorResponse } = require("./parser");
+const {
+  stringToJSON,
+  createResponse,
+  createErrorResponse,
+} = require("./parser");
 
 describe("stringToJSON test suites", () => {
   test("return a correct JSON", () => {
-    const result = stringToJSON("{\"test\":\"test\"}")
-    expect(result).toEqual({test:"test"})
+    const result = stringToJSON('{"test":"test"}');
+    expect(result).toEqual({ test: "test" });
   });
 
   test("throws an error when is invalid object", () => {
     const result = () => stringToJSON("test");
-    expect(result).toThrow(Error)
-    expect(result).toThrow("stringToJSON: Unexpected token e in JSON at position 1")
+    expect(result).toThrow(Error);
+    expect(result).toThrow(
+      "stringToJSON: Unexpected token e in JSON at position 1"
+    );
   });
 });
 
@@ -21,13 +27,13 @@ describe("createResponse test suites", () => {
   });
 
   test("return OK with body", () => {
-    const result = createResponse({test:"test"});
+    const result = createResponse({ test: "test" });
     expect(result.body).toMatch(/{\"test\":\"test\"}/);
     expect(result.statusCode).toEqual(200);
   });
 
   test("return diferent statusCode with body", () => {
-    const result = createResponse({test:"test"}, 500);
+    const result = createResponse({ test: "test" }, 500);
     expect(result.body).toMatch(/{\"test\":\"test\"}/);
     expect(result.statusCode).toEqual(500);
   });

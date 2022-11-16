@@ -1,4 +1,4 @@
-process.env.DEV_CHAT = 1;
+process.env.MAIN_CHAT = 1;
 
 const { logger } = require("./logger");
 

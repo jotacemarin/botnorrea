@@ -27,6 +27,5 @@ provider:
     DONNEVE_PAGE: ${self:custom.secrets.provider.environment.DONNEVE_PAGE}
     MIX_PANEL_API_KEY: ${self:custom.secrets.provider.environment.MIX_PANEL_API_KEY}
     MAIN_CHAT: ${self:custom.secrets.provider.environment.MAIN_CHAT}
-    DEV_CHAT: ${self:custom.secrets.provider.environment.DEV_CHAT}
 
 functions: ${self:custom.secrets.functions}

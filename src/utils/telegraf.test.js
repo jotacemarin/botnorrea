@@ -1,6 +1,5 @@
 process.env.BOT_NAME = "test";
 process.env.MAIN_CHAT = 1;
-process.env.DEV_CHAT = 2;
 
 jest.mock("../persistence/redis");
 const redisMethods = require("../persistence/redis");
@@ -174,13 +173,13 @@ describe("Test suite for setRedis", () => {
   beforeAll(() => {
     setKeySpy.mockImplementation(() => undefined);
   });
-  
+
   afterAll(() => {
     jest.restoreAllMocks();
   });
-  
+
   test("When redis key have a truthy value", async () => {
-    getKeySpy.mockImplementation(() => '1');
+    getKeySpy.mockImplementation(() => "1");
     await setRedis("test");
     expect(getKeySpy).toHaveBeenCalled();
     expect(setKeySpy).not.toHaveBeenCalled();
@@ -200,7 +199,7 @@ describe("test suite for isEnabled", () => {
   });
 
   test("Happy path when command is enable", async () => {
-    getKeySpy.mockImplementation(() => '1');
+    getKeySpy.mockImplementation(() => "1");
     const result = await isEnabled("test");
     expect(result).toBeNull();
     expect(getKeySpy).toHaveBeenCalled();
