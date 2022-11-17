@@ -25,6 +25,7 @@ provider:
     FILESMANAGER_API_KEY: ${self:custom.secrets.provider.environment.FILESMANAGER_API_KEY}
     DONNEVE_API: ${self:custom.secrets.provider.environment.DONNEVE_API}
     DONNEVE_PAGE: ${self:custom.secrets.provider.environment.DONNEVE_PAGE}
+    FREEIMAGE_API: ${self:custom.secrets.provider.environment.FREEIMAGE_API}
     MIX_PANEL_API_KEY: ${self:custom.secrets.provider.environment.MIX_PANEL_API_KEY}
     MAIN_CHAT: ${self:custom.secrets.provider.environment.MAIN_CHAT}
 

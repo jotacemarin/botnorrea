@@ -46,13 +46,38 @@ const loadCommands = (bot) => {
         const params = { context, args, bot };
         await commandScript.execute(params);
       } catch (error) {
-        console.error(`${error.message}; ${command}`);
+        console.error(`${error.message}; command: ${command}`);
       }
     };
 
     bot.command(command, execute);
 
     return { command: name, description, disabled };
+  });
+
+  return commands;
+};
+
+const loadListeners = (bot) => {
+  const commandFiles = fs
+    .readdirSync(`${__dirname}/listeners`)
+    .filter((file) => file.endsWith(".js"));
+
+  const commands = commandFiles.map((commandFile) => {
+    const commandScript = require(`./listeners/${commandFile}`);
+    const execute = async (context) => {
+      try {
+        const { update } = context;
+        const args = update.message.caption.trim().split(" ");
+
+        const params = { context, args, bot };
+        await commandScript.execute(params);
+      } catch (error) {
+        console.error(`${error.message}; listener: ${commandScript.name}`);
+      }
+    };
+
+    bot.on(["photo", "video"], execute);
   });
 
   return commands;
@@ -77,6 +102,7 @@ const buildRedis = async (commands = []) => {
 const handleUpdate = async (body) => {
   const bot = initBot();
   const commands = loadCommands(bot);
+  loadListeners(bot);
   buildHelp(bot, commands);
   buildRedis(commands);
   await bot.handleUpdate(body);
