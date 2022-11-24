@@ -38,10 +38,12 @@ module.exports = {
         .map(({ username }) => `@${username}`)
         .join(" | ");
 
-      const message = rawMessage.join(" ");
+      const message = rawMessage.length
+        ? `<b>\n\n${rawMessage.join(" ")}</b>`
+        : "";
 
       return context.replyWithHTML(
-        `${crewName}:\n\n<b>${message}</b>\n\n[ ${usernames} ]`,
+        `${crewName}:${message}\n\n[ ${usernames} ]`,
         extra
       );
     } catch (error) {
