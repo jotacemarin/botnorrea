@@ -1,23 +1,19 @@
 "use strict";
 
-const {
-  connect,
-  saveUserModel,
-  saveCrewModel,
-} = require("../persistence/mongodb");
+const { connect, saveUserModel } = require("../persistence/mongodb");
 const {
   haveCredentials,
   getMessageId,
   isEnabled,
 } = require("../utils/telegraf");
+const { getRandom } = require("../utils/filemanager");
 const { trackCommand } = require("../utils/mixpanel");
 
-const CURRENT_COMMAND = "newcrew";
+const CURRENT_COMMAND = "media_random";
 
 module.exports = {
   name: CURRENT_COMMAND,
-  disabled: true,
-  execute: async ({ context, args }) => {
+  execute: async ({ context }) => {
     const extra = getMessageId(context);
 
     try {
@@ -29,12 +25,12 @@ module.exports = {
       await isEnabled(CURRENT_COMMAND);
       trackCommand(CURRENT_COMMAND, context);
 
-      const name = await saveCrewModel(args);
-      return context.reply(`new crew created: ${name}`, extra);
+      const response = await getRandom();
+      return context.reply(response, extra);
     } catch (error) {
       const { message } = error;
       return context.replyWithMarkdown("`" + message + "`", extra);
     }
   },
-  description: "Create a new crew (usage: `/newcrew crew_name`)",
+  description: "Retrieve a random picture from file manager",
 };

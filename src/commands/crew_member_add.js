@@ -13,11 +13,10 @@ const {
 } = require("../utils/telegraf");
 const { trackCommand } = require("../utils/mixpanel");
 
-const CURRENT_COMMAND = "setcrew";
+const CURRENT_COMMAND = "crew_member_add";
 
 module.exports = {
   name: CURRENT_COMMAND,
-  disabled: true,
   execute: async ({ context, args }) => {
     const extra = getMessageId(context);
 
@@ -67,5 +66,5 @@ module.exports = {
     }
   },
   description:
-    "Set a new crews in user (usage: `/setcrew crew_name username username ...username`)",
+    "(usage: /crew_member_add crew_name username username ...username) Add a new user in one crew",
 };

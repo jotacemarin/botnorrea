@@ -86,10 +86,9 @@ const loadListeners = (bot) => {
 const buildHelp = (bot, commands = []) => {
   try {
     const helpText = commands
-      .filter(({ disabled }) => !disabled)
       .map(({ command, description }) => `/${command} - ${description}`)
       .join("\n");
-    bot.help((context) => context.replyWithMarkdown(helpText));
+    bot.help((context) => context.reply(helpText));
   } catch (error) {
     console.error("buildHelp help: ", error);
   }
