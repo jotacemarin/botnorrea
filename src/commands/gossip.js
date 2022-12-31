@@ -2,7 +2,7 @@
 
 const { MAIN_CHAT } = process.env;
 
-const { connect, saveUserModel } = require("../persistence/mongodb");
+const { saveUserModel } = require("../persistence/mongodb");
 const {
   haveCredentials,
   cleanMessage,
@@ -17,7 +17,6 @@ module.exports = {
     try {
       haveCredentials(context);
 
-      await connect();
       await saveUserModel(context);
 
       await isEnabled(CURRENT_COMMAND);

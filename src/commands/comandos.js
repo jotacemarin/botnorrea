@@ -1,11 +1,7 @@
 "use strict";
 
-const { connect, saveUserModel } = require("../persistence/mongodb");
-const {
-  haveCredentials,
-  getMessageId,
-  isEnabled,
-} = require("../utils/telegraf");
+const { saveUserModel } = require("../persistence/mongodb");
+const { getMessageId, isEnabled } = require("../utils/telegraf");
 const { trackCommand } = require("../utils/mixpanel");
 
 const CURRENT_COMMAND = "comandos";
@@ -16,9 +12,6 @@ module.exports = {
     const extra = getMessageId(context);
 
     try {
-      haveCredentials(context);
-
-      await connect();
       await saveUserModel(context);
 
       await isEnabled(CURRENT_COMMAND);

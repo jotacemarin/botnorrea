@@ -1,6 +1,6 @@
 "use strict";
 
-const { connect, saveUserModel } = require("../persistence/mongodb");
+const { saveUserModel } = require("../persistence/mongodb");
 const {
   haveCredentials,
   getMessageId,
@@ -19,7 +19,6 @@ module.exports = {
     try {
       haveCredentials(context);
 
-      await connect();
       await saveUserModel(context);
 
       await isEnabled(CURRENT_COMMAND);

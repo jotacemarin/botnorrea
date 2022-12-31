@@ -3,7 +3,7 @@
 const { MAIN_CHAT } = process.env;
 
 const moment = require("moment");
-const { connect, saveUserModel, userModel } = require("../persistence/mongodb");
+const { saveUserModel, userModel } = require("../persistence/mongodb");
 const {
   haveCredentials,
   getMessageId,
@@ -24,7 +24,6 @@ module.exports = {
     try {
       haveCredentials(context);
 
-      await connect();
       await saveUserModel(context);
 
       const chatId = getChatId(context);

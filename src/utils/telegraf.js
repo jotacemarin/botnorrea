@@ -9,11 +9,10 @@ const LIST_CHATS = [MAIN_CHAT];
 const COMMAND_ENABLED = "1";
 
 const haveCredentials = (context) => {
+  const { message, edited_message } = context;
   const {
-    message: {
-      from: { first_name, last_name, username },
-    },
-  } = context;
+    from: { first_name, last_name, username },
+  } = message ?? edited_message;
 
   if (username) return null;
 

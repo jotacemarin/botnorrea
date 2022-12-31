@@ -58,13 +58,13 @@ const loadCommands = (bot) => {
   return commands;
 };
 
-const loadListeners = (bot) => {
+const loadMediaListeners = (bot) => {
   const commandFiles = fs
-    .readdirSync(`${__dirname}/listeners`)
+    .readdirSync(`${__dirname}/media_listeners`)
     .filter((file) => file.endsWith(".js"));
 
   const commands = commandFiles.map((commandFile) => {
-    const commandScript = require(`./listeners/${commandFile}`);
+    const commandScript = require(`./media_listeners/${commandFile}`);
     const execute = async (context) => {
       try {
         const { update } = context;
@@ -101,7 +101,7 @@ const buildRedis = async (commands = []) => {
 const handleUpdate = async (body) => {
   const bot = initBot();
   const commands = loadCommands(bot);
-  loadListeners(bot);
+  loadMediaListeners(bot);
   buildHelp(bot, commands);
   buildRedis(commands);
   await bot.handleUpdate(body);

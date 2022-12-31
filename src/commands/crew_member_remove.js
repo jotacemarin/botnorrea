@@ -12,7 +12,7 @@ const {
 } = require("../utils/telegraf");
 const { trackCommand } = require("../utils/mixpanel");
 
-const CURRENT_COMMAND = "crew_member_add";
+const CURRENT_COMMAND = "crew_member_remove";
 
 module.exports = {
   name: CURRENT_COMMAND,
@@ -46,7 +46,7 @@ module.exports = {
       await crewModel
         .updateOne(
           { _id: crew._id },
-          { $push: { members: users.map((user) => user._id) } }
+          { $pull: { members: { $in: users.map((user) => user._id) } } }
         )
         .exec();
 
@@ -55,7 +55,7 @@ module.exports = {
         .join(" | ");
 
       return context.reply(
-        `crew ${crewName} updated, members added: \n\n[ ${usernamesString} ]`,
+        `crew ${crewName} updated, members removed: \n\n[ ${usernamesString} ]`,
         extra
       );
     } catch (error) {
@@ -64,5 +64,5 @@ module.exports = {
     }
   },
   description:
-    "(usage: /crew_member_add crew_name username username ...username) Add a new user in one crew",
+    "(usage: /crew_member_remove crew_name username username ...username) Remove an user in one crew",
 };

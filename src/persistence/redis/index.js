@@ -4,6 +4,8 @@ const { REDIS_HOST, REDIS_PORT, REDIS_PASSWORD } = process.env;
 
 const { createClient } = require("redis");
 
+let client = null;
+
 const getClient = async () =>
   createClient({
     socket: {
@@ -13,32 +15,44 @@ const getClient = async () =>
     password: REDIS_PASSWORD,
   });
 
+const connect = async () => {
+  if (client === null) {
+    client = await getClient();
+    await client.connect();
+  }
+
+  return client;
+};
+
+const disconnect = async () => {
+  if (client !== null) {
+    await client.quit();
+    await client.disconnect();
+    client = null;
+  }
+
+  return client;
+};
+
 const setKey = async (key, value, ttl = 300) => {
-  const client = await getClient();
-  await client.connect();
   await client.set(key, value);
   if (ttl !== 0) {
     await client.expire(key, ttl);
   }
-  await client.quit();
 };
 
 const getKey = async (key) => {
-  const client = await getClient();
-  await client.connect();
   const value = await client.get(key);
-  await client.quit();
   return value;
 };
 
 const delKey = async (key) => {
-  const client = await getClient();
-  await client.connect();
   await client.del(key);
-  await client.quit();
 };
 
 module.exports = {
+  connect,
+  disconnect,
   setKey,
   getKey,
   delKey,

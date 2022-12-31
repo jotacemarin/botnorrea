@@ -1,6 +1,6 @@
 "use strict";
 
-const { connect, saveUserScore, saveUserModel } = require("../persistence/mongodb");
+const { saveUserScore, saveUserModel } = require("../persistence/mongodb");
 
 const TYPE_BOT_COMMAND = "bot_command";
 
@@ -13,7 +13,6 @@ module.exports = async (context) => {
     if (isCommand) {
       return null;
     }
-    await connect();
     await saveUserModel(context);
 
     const score = String(text).split(" ").length;
