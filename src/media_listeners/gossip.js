@@ -9,6 +9,7 @@ const {
   isEnabled,
 } = require("../utils/telegraf");
 const { uploadPic } = require("../utils/freeimage");
+const { createAnonymousMessage } = require("../utils/parser");
 
 const CURRENT_LISTENER = "gossip";
 
@@ -31,19 +32,20 @@ module.exports = {
       const chatId = Number(MAIN_CHAT);
       const { caption, photo, video } = update.message;
 
-      const textMessage = caption ? cleanMessage(caption) : "";
+      const messageCleaned = caption ? cleanMessage(caption) : "";
+      const messageAnonymous = createAnonymousMessage(messageCleaned);
 
       if (photo) {
         const [{ file_id }] = photo.reverse();
         const { href: media } = await bot.telegram.getFileLink(file_id);
         const url = await uploadPic(media);
-        return bot.telegram.sendPhoto(chatId, url, { caption: textMessage });
+        return bot.telegram.sendPhoto(chatId, url, { caption: messageAnonymous });
       }
 
       if (video && false) {
         const { file_id } = video;
         const { href: media } = await bot.telegram.getFileLink(file_id);
-        return bot.telegram.sendVideo(chatId, media, textMessage);
+        return bot.telegram.sendVideo(chatId, media, messageAnonymous);
       }
 
       return context.replyWithMarkdown("`Please write a message to send`");

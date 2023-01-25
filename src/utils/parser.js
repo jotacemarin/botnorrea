@@ -34,8 +34,14 @@ const createErrorResponse = (error = "", status = INTERNAL_SERVER_ERROR) => {
   return createResponse({ error }, status);
 };
 
+const createAnonymousMessage = (rawMessage = "") => {
+  const message = String(rawMessage);
+  return `Anonymous sends us: ${message ? message : "..."}`;
+};
+
 module.exports = {
   createResponse,
   createErrorResponse,
   stringToJSON,
+  createAnonymousMessage,
 };
