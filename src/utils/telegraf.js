@@ -5,8 +5,10 @@ const { BOT_NAME, MAIN_CHAT } = process.env;
 const { getKey, setKey } = require("../persistence/redis");
 
 const BOT_REDIS_PREFIX = `${BOT_NAME}`;
+const BOT_PROVIDER_PREFIX = "providers";
 const LIST_CHATS = [MAIN_CHAT];
 const COMMAND_ENABLED = "1";
+const MAX_CALLS = 5;
 
 const haveCredentials = (context) => {
   const { message, edited_message } = context;
@@ -91,6 +93,32 @@ const isEnabled = async (command) => {
   return null;
 };
 
+const providerIsEnabled = async (provider) => {
+  if (provider === "") {
+    throw new Error("Provider must necessary!");
+  }
+
+  const externalProviderKey = `${BOT_REDIS_PREFIX}:${BOT_PROVIDER_PREFIX}:${provider}`;
+  const current = await getKey(externalProviderKey);
+
+  if (!current) {
+    throw new Error(`${provider} was not found!`);
+  }
+
+  if (isNaN(current)) {
+    throw new Error(`Botnorrea internal error!`);
+  }
+
+  const currentFormatted = Number(current);
+  if (currentFormatted > MAX_CALLS) {
+    throw new Error(`${provider} reached the maximum calls to webhook!`);
+  }
+
+  await setKey(externalProviderKey, currentFormatted + 1, 0);
+
+  return null;
+};
+
 module.exports = {
   haveCredentials,
   cleanMessage,
@@ -99,4 +127,5 @@ module.exports = {
   getNewPermissions,
   setRedis,
   isEnabled,
+  providerIsEnabled,
 };

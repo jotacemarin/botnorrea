@@ -65,12 +65,13 @@ const publicWebhook = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   try {
-    const { body: bodyString } = event;
+    const { body: bodyString, headers } = event;
 
     const body = stringToJSON(bodyString);
     logger(body);
 
-    await telegram.externalWebhook(body);
+    await redisConnect();
+    await telegram.externalWebhook({ ...body, ...headers });
 
     return callback(null, createResponse());
   } catch (error) {

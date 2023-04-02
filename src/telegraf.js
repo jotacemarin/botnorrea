@@ -4,7 +4,11 @@ const { TELEGRAM_TOKEN, MAIN_CHAT } = process.env;
 
 const fs = require("fs");
 const { Telegraf } = require("telegraf");
-const { cleanMessage, setRedis } = require("./utils/telegraf");
+const {
+  cleanMessage,
+  setRedis,
+  providerIsEnabled,
+} = require("./utils/telegraf");
 
 const BOT_COMMAND_PREFIX = "/";
 const COMMAND_POSITION = 0;
@@ -108,6 +112,8 @@ const handleUpdate = async (body) => {
 };
 
 const externalWebhook = async (body) => {
+  await providerIsEnabled(body.Authorization ?? body.authorization ?? "");
+
   const bot = initBot();
 
   const chatId = Number(MAIN_CHAT);
