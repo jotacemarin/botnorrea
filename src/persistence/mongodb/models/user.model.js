@@ -12,6 +12,7 @@ const userSchema = new Schema(
     firstname: { type: String, index: "text" },
     lastname: { type: String, index: "text" },
     score: { type: Number, default: 0 },
+    qrPathId: { type: String, index: "text" },
   },
   {
     timestamps: true,

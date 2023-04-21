@@ -28,5 +28,6 @@ provider:
     FREEIMAGE_API: ${self:custom.secrets.provider.environment.FREEIMAGE_API}
     MIX_PANEL_API_KEY: ${self:custom.secrets.provider.environment.MIX_PANEL_API_KEY}
     MAIN_CHAT: ${self:custom.secrets.provider.environment.MAIN_CHAT}
+    ADMIN: ${self:custom.secrets.provider.environment.ADMIN}
 
 functions: ${self:custom.secrets.functions}

@@ -1,12 +1,12 @@
 "use strict";
 
-const { MAIN_CHAT } = process.env;
+const { MAIN_CHAT, ADMIN } = process.env;
 
 const _ = require("lodash");
 
 const CHAT_ID_PATH = "message.chat.id";
 
-const TEST_CHATS = [Number(MAIN_CHAT)];
+const TEST_CHATS = [Number(MAIN_CHAT), Number(ADMIN)];
 
 const logger = (body) => {
   try {

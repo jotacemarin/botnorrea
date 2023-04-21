@@ -10,6 +10,8 @@
     "local:randompic": "sls invoke local -f webhook -p mocks/event_randompic.json --stage prod",
     "local:pic": "sls invoke local -f webhook -p mocks/event_pic.json --stage prod",
     "local:randommedia": "sls invoke local -f webhook -p mocks/event_randommedia.json --stage prod",
+    "local:qr": "sls invoke local -f webhook -p mocks/event_qr.json --stage prod",
+    "local:qr_update": "sls invoke local -f webhook -p mocks/event_qr_update.json --stage prod",
     "local:media": "sls invoke local -f webhook -p mocks/event_media.json --stage prod",
     "local:crews": "sls invoke local -f webhook -p mocks/event_crews.json --stage prod",
     "local:crew": "sls invoke local -f webhook -p mocks/event_crew.json --stage prod",

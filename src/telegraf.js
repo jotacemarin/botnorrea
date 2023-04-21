@@ -63,28 +63,18 @@ const loadCommands = (bot) => {
 };
 
 const loadMediaListeners = (bot) => {
-  const commandFiles = fs
-    .readdirSync(`${__dirname}/media_listeners`)
-    .filter((file) => file.endsWith(".js"));
-
-  const commands = commandFiles.map((commandFile) => {
-    const commandScript = require(`./media_listeners/${commandFile}`);
-    const execute = async (context) => {
-      try {
-        const { update } = context;
-        const args = update.message.caption.trim().split(" ");
-
-        const params = { context, args, bot };
-        await commandScript.execute(params);
-      } catch (error) {
-        console.error(`${error.message}; listener: ${commandScript.name}`);
-      }
-    };
-
-    bot.on(["photo", "video"], execute);
-  });
-
-  return commands;
+  const triggerListener = require(`./media_listeners/index.js`);
+  const execute = async (context) => {
+    try {
+      const { update } = context;
+      const caption = update?.message?.caption ?? "";
+      const args = caption.trim().split(" ");
+      await triggerListener({ context, args, bot });
+    } catch (error) {
+      console.error(`loadMediaListeners: ${error.message}`);
+    }
+  };
+  bot.on(["photo", "video"], execute);
 };
 
 const buildHelp = (bot, commands = []) => {

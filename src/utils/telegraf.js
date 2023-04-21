@@ -4,6 +4,7 @@ const { BOT_NAME, MAIN_CHAT } = process.env;
 
 const { getKey, setKey } = require("../persistence/redis");
 
+const TELEGRAM_HTTP_API = "https://api.telegram.org/file/";
 const BOT_REDIS_PREFIX = `${BOT_NAME}`;
 const BOT_PROVIDER_PREFIX = "providers";
 const LIST_CHATS = [MAIN_CHAT];
@@ -34,6 +35,20 @@ const cleanMessage = (message) => {
     .replace("@botnorrea_bot", "");
 
   return cleanedMessage;
+};
+
+const getUser = (context) => {
+  const {
+    message: { from },
+  } = context;
+  const { id, username, first_name, last_name } = from;
+
+  return {
+    id,
+    firstname: first_name,
+    lastname: last_name,
+    username,
+  };
 };
 
 const getMessageId = (context) => {
@@ -122,6 +137,7 @@ const providerIsEnabled = async (provider) => {
 module.exports = {
   haveCredentials,
   cleanMessage,
+  getUser,
   getMessageId,
   getChatId,
   getNewPermissions,
