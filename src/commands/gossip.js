@@ -8,6 +8,7 @@ const {
   haveCredentials,
   cleanMessage,
   isEnabled,
+  getMessageId,
 } = require("../utils/telegraf");
 
 const CURRENT_COMMAND = "gossip";
@@ -26,7 +27,13 @@ module.exports = {
       const messageCleaned = cleanMessage(context.message.text);
       const messageAnonymous = createAnonymousMessage(messageCleaned);
       if (messageAnonymous !== "") {
-        return bot.telegram.sendMessage(chatId, messageAnonymous);
+        await bot.telegram.sendMessage(chatId, messageAnonymous);
+        const extra = getMessageId(context);
+        const { title } = await bot.telegram.getChat(chatId);
+        return context.replyWithHTML(
+          `<b>message:</b> ${messageAnonymous}\n\n<b>group:</b> ${title}`,
+          extra
+        );
       }
 
       return context.replyWithMarkdown("`Please write a message to send`");
